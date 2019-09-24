@@ -1,0 +1,67 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Profile
+    </ion-title>
+     <ion-buttons *ngIf="!is_updated" right>
+      <button ion-button (click)="tedit()" clear>Edit</button>
+    </ion-buttons>
+     <ion-buttons *ngIf="is_updated" right>
+      <button ion-button (click)="update()" clear>Update</button>
+    </ion-buttons>
+  </ion-navbar> -->
+
+  <ion-grid>
+    <ion-col col-2>
+      <ion-icon (click)="back()" name="arrow-round-back"></ion-icon>
+    </ion-col>
+    <ion-col col-8>
+      <ion-title>
+        Profile
+      </ion-title>
+    </ion-col>
+    <ion-col col-2>
+      <ion-buttons *ngIf="!is_updated">
+        <button ion-button (click)="tedit()" clear>Edit</button>
+      </ion-buttons>
+       <ion-buttons *ngIf="is_updated">
+        <button ion-button (click)="update()" clear>Update</button>
+      </ion-buttons>
+    </ion-col>
+  </ion-grid>
+
+ <!--  <ion-icon (click)="back()" name="arrow-round-back"></ion-icon>
+  <ion-title>
+    Profile
+  </ion-title>
+  <ion-buttons *ngIf="!is_updated">
+    <button ion-button (click)="tedit()" clear>Edit</button>
+  </ion-buttons>
+  <ion-buttons *ngIf="is_updated">
+    <button ion-button (click)="update()" clear>Update</button>
+  </ion-buttons> -->
+</ion-header>
+
+<ion-content class="profile" >
+
+    <div class="profile-div">
+       <div class="profile-pic" >
+        <img src="{{current_user.private_image_path}}" (click)=presentActionSheet()>
+      </div>
+      <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+    </div>
+   
+    <ion-list>
+     
+      <ion-item *ngFor="let t of profile; let i = index " >
+        <ion-label  color="primary" fixed>{{t.placeholder}}</ion-label>
+        <ion-input (click)="edit(t.type,t.column,i)" type="text" placeholder="{{t.placeholder}}" [(ngModel)]="t.value" disabled="{{t.disabled}}"></ion-input>
+        <button ion-button clear item-end *ngIf="t.column == 'password' || t.column == 'pin'" (click)="edit(t.type,t.column,i)">Change</button>
+      </ion-item>
+
+    </ion-list>
+
+</ion-content>

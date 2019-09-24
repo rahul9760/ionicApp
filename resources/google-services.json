@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "923605746593",
+    "firebase_url": "https://velvetfm-187311.firebaseio.com",
+    "project_id": "velvetfm-187311",
+    "storage_bucket": "velvetfm-187311.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923605746593:android:88cd1ce354378b3f",
+        "android_client_info": {
+          "package_name": "com.velvet.fm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923605746593-jobsgidaqtelpjaesls27h1k7u236t2e.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "923605746593-n8at2ner238nv5856e2938e3uq4g4iod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi29g3lZ_ESqczQBzJgMA-B8d_YdOy8RE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923605746593-jobsgidaqtelpjaesls27h1k7u236t2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

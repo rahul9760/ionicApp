@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Upload Profile Picture
+    </ion-title>
+
+     <ion-buttons right>
+      <button ion-button (click)="skip()" clear>skip</button>
+    </ion-buttons>
+    
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+  <div class="profile-div">
+     <div class="profile-pic" >
+      <img [src]="this.image_data" (click)=openCamera()>
+    </div>
+    <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+  </div>
+
+
+  <ion-list-header [class]="header_class">
+    Person
+  </ion-list-header>
+
+  <ion-item>
+    {{getPersonName()}}
+  </ion-item>
+
+
+  <ion-list-header [class]="header_class">
+    Email
+  </ion-list-header>
+
+  <ion-item>
+    {{employee.email}}
+  </ion-item>
+
+  <div *ngFor="let emp of employee_data.attributes.employee">
+      
+    <ion-list-header [class]="header_class">
+      {{emp.name}}
+    </ion-list-header>
+
+    <ion-item>
+      {{employee.attributes[emp.id]}}
+    </ion-item>
+
+  </div>
+
+</ion-content>

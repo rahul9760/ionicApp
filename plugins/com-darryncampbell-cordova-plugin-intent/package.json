@@ -1,0 +1,57 @@
+{
+  "_args": [
+    [
+      "com-darryncampbell-cordova-plugin-intent@0.0.14",
+      "/var/www/html/luckApp&web/velvetFM___/velvetFM___"
+    ]
+  ],
+  "_from": "com-darryncampbell-cordova-plugin-intent@0.0.14",
+  "_id": "com-darryncampbell-cordova-plugin-intent@0.0.14",
+  "_inBundle": false,
+  "_integrity": "sha1-fwAYvPq5gQ/x1ltQyyhPu4Q+gdQ=",
+  "_location": "/com-darryncampbell-cordova-plugin-intent",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "com-darryncampbell-cordova-plugin-intent@0.0.14",
+    "name": "com-darryncampbell-cordova-plugin-intent",
+    "escapedName": "com-darryncampbell-cordova-plugin-intent",
+    "rawSpec": "0.0.14",
+    "saveSpec": null,
+    "fetchSpec": "0.0.14"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/com-darryncampbell-cordova-plugin-intent/-/com-darryncampbell-cordova-plugin-intent-0.0.14.tgz",
+  "_spec": "0.0.14",
+  "_where": "/var/www/html/luckApp&web/velvetFM___/velvetFM___",
+  "author": {
+    "name": "Darryn Campbell"
+  },
+  "bugs": {
+    "url": "https://github.com/darryncampbell/darryncampbell-cordova-plugin-intent/issues"
+  },
+  "cordova": {
+    "id": "com-darryncampbell-cordova-plugin-intent",
+    "platforms": [
+      "android"
+    ]
+  },
+  "description": "General purpose intent shim layer for cordova appliations on Android.  Handles various techniques for sending and receiving intents.",
+  "homepage": "https://github.com/darryncampbell/darryncampbell-cordova-plugin-intent#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "Intent"
+  ],
+  "license": "MIT",
+  "main": "intentShim.js",
+  "name": "com-darryncampbell-cordova-plugin-intent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darryncampbell/darryncampbell-cordova-plugin-intent.git"
+  },
+  "version": "0.0.14"
+}

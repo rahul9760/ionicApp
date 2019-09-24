@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add new location
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios,android">Cancel</span>
+      </button>
+    </ion-buttons>
+    <ion-buttons right >
+      <button ion-button (click)="create()" clear>Save</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="attributes">
+    
+       <ion-list-header [class]="header_class">
+        Name
+      </ion-list-header>
+
+      <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="infrastructure.name"  required placeholder="Name"/>
+      </ion-item>
+    
+      <ion-list-header [class]="header_class">
+        Barcode
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Barcode</ion-label>
+        <ion-select [(ngModel)]="infrastructure.barcode">
+          <ion-option *ngFor="let barcode of barcodes" [value]="barcode" >
+            {{barcode}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngFor="let attribute of attributes" >
+          
+        <ion-list-header [class]="header_class">
+          {{attribute.name}}
+        </ion-list-header>
+
+        <ion-item *ngIf=" attribute.attr_type == 'text' || attribute.attr_type == 'number' ">
+          <input [class]="input_class" 
+                 type="text" 
+                 [(ngModel)]="infrastructure.attributes[attribute.id]" 
+                 required 
+                 placeholder="{{attribute.name}}"/>
+        </ion-item>
+
+        <ion-item *ngIf=" attribute.attr_type == 'date' " class="item-margin" >
+          <ion-datetime displayFormat="DD/MM/YYYY" 
+                        [(ngModel)]="infrastructure.attributes[attribute.id]" 
+                        pickerFormat="DD MMM YYYY" 
+                        placeholder="{{attribute.name}}" >
+                    
+          </ion-datetime>
+        </ion-item>
+
+        <ion-item *ngIf=" attribute.attr_type == 'list' " class="item-margin options" >
+          <ion-label>{{attribute.name}}</ion-label>
+          <ion-select [(ngModel)]="infrastructure.attributes[attribute.id]">
+            <ion-option *ngFor="let op of attribute.options" value="{{op}}" >
+              {{op}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+
+      </div>
+
+  </ion-list>
+</ion-content>

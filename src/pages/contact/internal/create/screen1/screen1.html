@@ -1,0 +1,46 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Select Site
+    </ion-title>
+
+     <ion-buttons right *ngIf="site" >
+      <button ion-button (click)="next()" clear>Next</button>
+    </ion-buttons>
+  </ion-navbar>
+ 	<ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)">
+	</ion-searchbar>
+</ion-header>
+
+<ion-content>
+	
+	<ion-list radio-group [(ngModel)]="site" *ngIf="!reload && sites?.length > 0" >
+	  <ion-list-header class="item item-ios list-header list-header-ios screen-header" style="">
+	    Sites
+	  </ion-list-header>
+	  <ion-item *ngFor="let s of sites">
+	    <ion-label text-capitalize>{{s.name}}</ion-label>
+	    <ion-radio value="{{s.id}}"></ion-radio>
+	  </ion-item>
+	</ion-list>
+	
+	<ion-infinite-scroll *ngIf="have_more"  (ionInfinite)="doInfinite($event)">
+    	<ion-infinite-scroll-content></ion-infinite-scroll-content>
+  	</ion-infinite-scroll>
+
+</ion-content>
+
+<ion-footer>
+  <ion-fab right bottom *ngIf="!reload">
+    <button class="add-btn" ion-fab (click)="create()" ><ion-icon class="add-icon" name="add"  ></ion-icon></button>
+  </ion-fab>
+</ion-footer>

@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Linked Contacts External
+    </ion-title>
+  </ion-navbar>
+  <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)">
+  </ion-searchbar>
+</ion-header>
+
+<ion-content >
+ <ion-list *ngIf="!is_searched">
+    
+    <ion-item  *ngFor="let contact of contacts; let i = index " >
+
+        <ion-avatar item-start>
+          <img src="assets/img/dummy_user.png">
+        </ion-avatar>
+
+        <ion-label (click)='view(contact);'>
+           <h2 text-capitalize >{{contact.first_name}} {{contact.last_name}}</h2>
+           <p> {{contact.email}} - <span text-capitalize>{{contact.relation_type}}</span></p>
+        </ion-label>
+
+        <button class="more-btn" ion-button (click)='presentActionSheet(contact);' item-end clear > 
+          <ion-icon name="md-more" ></ion-icon>
+        </button>
+
+    </ion-item>
+    
+  </ion-list>
+ 
+  <div class="search-spinner" *ngIf="is_searched">
+    <ion-spinner ></ion-spinner>
+  </div> 
+
+  <ion-grid class="grid-reload" *ngIf="!is_searched && !reload && contacts?.length <= 0" > 
+    <ion-row text-center>
+      <ion-col>
+        <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+        <p>No Record Found.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll *ngIf="have_more"  (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer>
+  <ion-fab right bottom >
+     <button class="add-btn" ion-fab (click)="create()" ><ion-icon class="add-icon" name="add" ></ion-icon></button>
+  </ion-fab>
+</ion-footer>

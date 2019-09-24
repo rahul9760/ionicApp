@@ -1,0 +1,253 @@
+<ion-header>
+
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+   
+    <ion-title>
+      Shared Documents
+    </ion-title>
+      <ion-buttons right>
+        <button *ngIf="!all_shared_documents" ion-button icon-only (click)= "init()"> <ion-icon name="ios-people"><ion-badge class="custom-bagde" *ngIf="organisations?.length > 0"  color="danger">{{organisations?.length}}</ion-badge></ion-icon> </button>
+        <button *ngIf="!all_shared_documents " ion-button icon-only (click)= "applyConditions()">  <ion-icon ios="ios-options" md="md-options" item-end color="red"><ion-badge class="custom-bagde" *ngIf="conditions?.length > 0 && conditions[0].value !== ''" color="danger">{{conditions?.length}}</ion-badge> </ion-icon> </button>
+      </ion-buttons>
+  </ion-navbar>
+
+   <ion-searchbar *ngIf="!all_shared_documents" [(ngModel)]="search" (ionInput)="getItems($event)">
+   </ion-searchbar>
+
+   <div *ngIf="all_shared_documents">
+       <ion-segment [(ngModel)]="topbar" class="my-ion-segment" >
+          <ion-segment-button value="open"  class="my-ion-segment-button">
+            All Documents 
+          </ion-segment-button>
+       </ion-segment>
+   </div>
+
+   <div *ngIf="shared_with == 'me' && !all_shared_documents && org_name">
+     <ion-segment  [(ngModel)]="topbar" >
+       <ion-segment-button value="open" class="my-ion-segment-button">
+          <div text-capitalize >
+                <span class="company-title"> {{org_name}} {{conditions?.length > 0 ? '(Shared with me)' : ''}}</span>
+          </div>
+        </ion-segment-button>
+     </ion-segment>
+   </div>
+  
+   <div *ngIf="shared_with == 'others'  && search_org_id > 0">
+      <ion-segment  [(ngModel)]="topbar" >
+        <ion-segment-button value="open" class="my-ion-segment-button">
+          <div text-capitalize >
+            <span class="company-title"> {{org_name}} {{conditions?.length > 0 ? '(Shared with others)' : ''}}</span>
+          </div>
+        </ion-segment-button>
+      </ion-segment>
+   </div> 
+
+</ion-header>
+
+<ion-content >
+
+    <div [ngSwitch]="shared_with" [class]="!all_shared_documents && conditions?.length == 0  ? 'mt-90' : ''"> 
+
+      <ion-list *ngSwitchCase="'me'" >
+        
+        <div *ngIf="all_shared_documents && conditions?.length == 0" >
+          
+          <div *ngFor="let u of myUserKeys;" >
+
+            <ion-list-header class="my-list-header">
+               <ion-avatar class="my-avatar" item-start >
+                <img class="my-img" src="{{getUrl(u)}}">
+              </ion-avatar>
+               <span>{{my_users[u]['name']}}</span>
+
+            </ion-list-header>
+
+            <ion-item *ngFor="let d of my_documents[u]; let i = index " >
+
+              <div tappable (click)='view(page.view, d);'>
+                <h2>{{d.designation}}</h2>
+                <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+              </div>
+
+              <button class="wd-30" ion-button (click)='presentActionSheet(page.info, d);' item-end clear > <ion-icon name="md-more" ></ion-icon></button>
+
+            </ion-item> 
+
+          </div> 
+
+        </div>
+        
+        <div *ngIf="!all_shared_documents && conditions?.length == 0">
+
+          <div *ngFor="let u of myUserKeys;" >
+
+            <ion-list-header class="my-list-header">
+               <ion-avatar class="my-avatar" item-start >
+                <img class="my-img" src="{{getUrl(u)}}">
+              </ion-avatar>
+               <span>{{my_users[u]['name']}}</span>
+
+            </ion-list-header>
+
+            <ion-item *ngFor="let d of my_documents[u]; let i = index " >
+
+              <div tappable (click)='view(page.view, d);'>
+                <h2>{{d.designation}}</h2>
+                <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+              </div>
+
+              <button class="wd-30" ion-button (click)='presentActionSheet(page.info, d);' item-end clear > <ion-icon name="md-more" ></ion-icon></button>
+
+            </ion-item> 
+
+          </div> 
+
+          <div class="search-spinner" *ngIf="is_searched">
+            <ion-spinner ></ion-spinner>
+          </div> 
+
+        </div>
+
+
+
+        <div *ngIf="conditions?.length > 0">
+
+          <ion-item *ngFor="let d of documents;" >
+
+              <div tappable (click)='view(page.view, d);'>
+                <h2>{{d.designation}}</h2>
+                <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+              </div>
+
+              <button class="wd-30"  ion-button (click)='presentActionSheet(page.info, d);' item-end clear > <ion-icon name="md-more" ></ion-icon></button>
+
+          </ion-item> 
+
+        </div>
+
+        <ion-grid class="grid-reload" *ngIf=" !reload &&  myUserKeys?.length <= 0 && documents?.length <= 0 && !is_searched " > 
+          <ion-row text-center>
+            <ion-col>
+              <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+              <p>No Record Found.</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'others'">
+
+        <div>
+
+          <div *ngIf="conditions?.length == 0"  >
+            <div *ngFor="let o of othersOrgKeys;"  >
+
+              <div class="company-bannner" *ngIf="all_shared_documents"> 
+                <div text-capitalize >
+                  <span class="company-title"> {{ data.shared_with_others.organisations[o].name}} </span>
+                </div>
+              </div>
+
+              <div *ngFor="let u of getOrgUsers(o)" >
+                
+                 <ion-list-header class="my-list-header" >
+                  
+                   <ion-avatar class="my-avatar" item-start >
+                    <img class="my-img" src="{{getUrl(u)}}">
+                   </ion-avatar>
+                   <span>{{others_users[u]['name']}}</span>
+
+                 </ion-list-header >
+
+                <ion-item *ngFor="let d of others_documents[o][u]; let i = index " >
+
+                  <div tappable (click)='view(page.view, d);'>
+                    <h2>{{d.designation}}</h2>
+                    <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+                  </div>
+                  
+                  <button class="wd-30"  ion-button (click)='actionSheetOthers(d, u);' item-end clear > <ion-icon name="md-more" ></ion-icon></button>
+
+                </ion-item> 
+
+              </div> 
+
+              <div class="search-spinner" *ngIf="is_searched">
+                <ion-spinner ></ion-spinner>
+              </div> 
+
+            </div> 
+          </div> 
+
+          <div *ngIf="conditions?.length > 0">
+  
+            <ion-item *ngFor="let d of documents;" >
+
+                <div tappable (click)='view(page.view, d);'>
+                  <h2>{{d.designation}}</h2>
+                  <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+                </div>
+
+                <button class="wd-30"  ion-button (click)='actionSheetOthers(d);' item-end clear > <ion-icon name="md-more" ></ion-icon></button>
+
+            </ion-item> 
+
+          </div>
+
+        </div>
+
+        <ion-grid class="grid-reload" *ngIf=" !reload &&  ( ( myUserKeys?.length <= 0 && shared_with == 'me' ) || ( othersOrgKeys?.length <= 0 && shared_with == 'others' ) ) && (  conditions?.length == 0 || ( conditions?.length > 0 && documents?.length == 0 ) )"> 
+          <ion-row text-center>
+            <ion-col>
+              <p><ion-icon class="connection-timeout" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+              <p>No Record Found.</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-list>
+
+    </div>
+
+
+    <ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-infinite-scroll *ngIf="have_more && shared_with == 'me'"  (ionInfinite)="doInfinite($event)">
+     <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
+</ion-content>
+
+<ion-footer>
+
+   <ion-segment [(ngModel)]="shared_with" *ngIf=" conditions?.length == 0">
+      <ion-segment-button value="me" (click)= "replaceDocument('me')">
+       Shared with me
+      </ion-segment-button>
+      <ion-segment-button value="others"  (click)= "replaceDocument('others')">
+        Shared with others
+      </ion-segment-button>
+    </ion-segment>
+  </ion-footer>
+

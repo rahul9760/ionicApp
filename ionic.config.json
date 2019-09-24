@@ -1,0 +1,15 @@
+{
+  "name": "VelvetFM",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/v1",
+      "proxyUrl": "http://ns369332.ip-5-196-82.eu/VelvetFM2/VelvetFM_1_3/user/"
+    }
+  ],
+  "pro_id": "fc847335",
+  "id": "fc847335"
+}

@@ -1,0 +1,86 @@
+
+page-list-documents {
+
+  ion-card {
+    position: relative;
+    text-align: center;
+  }
+
+  .my-icon {
+   color: #fff;
+  }
+
+  .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+
+  .card-md {
+    padding : 20px;
+    background : #2675C3;
+  }
+
+  .card-md p {
+    color: #fff;
+  }
+
+  .item-md ion-thumbnail ion-img, .item-md ion-thumbnail img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .item-md ion-thumbnail {
+    min-width: 80px;
+    min-height: 60px;
+  }
+
+  .opened {
+   background-color:#E9EDF0;
+  }
+
+  .custom-search {
+    position : fixed
+  }
+  
+  .custom-small {
+    width: 26px;
+    height: 26px;
+  }
+
+
+  .custom-btn {    
+    color: #8E2931;
+  }
+
+  .grid-reload{
+    margin: 45% auto;
+  }
+
+  .reload-btn{
+    font-size: 2.5em;
+    height: 50px;
+  }
+
+
+  .ion-md-more{
+    font-size:1.7em;
+  }
+
+  .toolbar-title {
+    text-align:center;
+  }
+}
+
+

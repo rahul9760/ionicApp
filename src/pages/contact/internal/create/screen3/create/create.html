@@ -1,0 +1,59 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create Person
+    </ion-title>
+
+     <ion-buttons right>
+      <button ion-button (click)="save()" clear>Save</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="data">
+    
+      <ion-list-header [class]="header_class">
+        First Name
+      </ion-list-header>
+
+      <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="person.first_name"  required placeholder="First Name"/>
+      </ion-item>
+    
+      <ion-list-header [class]="header_class">
+       Last Name
+      </ion-list-header>
+
+      <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="person.last_name"  required placeholder="First Name"/>
+      </ion-item>
+
+      <div *ngFor="let per of data.attributes.person">
+          
+         <ion-list-header [class]="header_class">
+          {{per.name}}
+        </ion-list-header>
+
+        <ion-item>
+          <input [class]="input_class" type="text" [(ngModel)]="person.attributes[per.id]" required placeholder="{{per.name}}"/>
+        </ion-item>
+
+      </div>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+ 
+</ion-footer>

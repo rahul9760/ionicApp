@@ -1,0 +1,139 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Create Document
+        </ion-title>
+    <ion-buttons start>
+        <button ion-button (click)="dismiss()">
+            <span ion-text color="primary" showWhen="ios,android">Cancel</span>
+        </button>
+    </ion-buttons>
+        <ion-buttons right *ngIf = "files.length > 0">
+            <button ion-button (click)="save()" clear>Save</button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <div>
+            <ion-item>
+                <ion-label>Category</ion-label>
+                <ion-select [(ngModel)]="document.category" (ionChange)="catChange()">
+                    <ion-option *ngFor="let ct of categories" value="{{ct.id}}">{{ct.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </div>
+        <div *ngIf = "subcategories">
+            <ion-item >
+                <ion-label>Sub category</ion-label>
+                <ion-select [(ngModel)]="document.subcategory" (ionChange)="subCatChange()">
+                    <ion-option *ngFor="let sct of subcategories" value="{{sct.id}}">{{userLang(sct.name)}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </div>
+    </ion-list>
+
+    <ion-list>
+        <div *ngIf="attributes.categories_attrs && attributes.sub_categories_attrs">
+            <ion-list-header class="item item-ios list-header list-header-ios screen-header" > infos </ion-list-header>
+            <div>
+                <ion-item >
+                    <input class="text-input text-input-ios" type="text" [(ngModel)]="designation" name="designation" required placeholder="Designation"/>
+                </ion-item>
+            </div>
+        </div>
+        <div *ngIf="attributes.categories_attrs">
+            <ion-list-header class="item item-ios list-header list-header-ios screen-header" > Category </ion-list-header>
+            <div *ngFor="let ca of attributes.categories_attrs">
+        
+                <ion-item *ngIf=" ca.attr_type == 'text' || ca.attr_type == 'number' ">
+                    <input class="text-input text-input-ios" type="{{ca.attr_type}}" [(ngModel)]="category_data[ca.id]" name="{{ca.name}}" required placeholder="{{ca.name}}"/>
+                </ion-item>
+
+                <ion-item *ngIf=" ca.attr_type == 'date' " class="item-margin" >
+                    <ion-datetime displayFormat="DD/MM/YYYY" style="padding:0;" [(ngModel)]="category_data[ca.id]"  pickerFormat="DD MMM YYYY" placeholder="{{ca.name}}" ></ion-datetime>
+                </ion-item>
+
+                <ion-item *ngIf=" ca.attr_type == 'list' ">
+                    <ion-label>{{ca.name}}</ion-label>
+                    <ion-select [(ngModel)]="category_data[ca.id]" class="item-margin">
+                        <ion-option *ngFor="let op of ca.options" value="{{op}}" >{{op}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+        </div>
+    
+        <div *ngIf="attributes.sub_categories_attrs">
+            <ion-list-header class="item item-ios list-header list-header-ios screen-header" > Sub Category </ion-list-header>
+            <div *ngFor="let sa of attributes.sub_categories_attrs">
+                <ion-item *ngIf=" sa.attr_type == 'text' || sa.attr_type == 'number' ">
+                    <input class="text-input text-input-ios" type="text" name="username" [(ngModel)]="subcategory_data[sa.id]" required placeholder="{{sa.name}}"/>
+                </ion-item>
+                <ion-item *ngIf=" sa.attr_type == 'date' " class="item-margin" >
+                    <ion-datetime displayFormat="DD/MM/YYYY" style="padding:0" [(ngModel)]="subcategory_data[sa.id]" pickerFormat="DD MMM YYYY" placeholder="{{sa.name}}" ></ion-datetime>
+                </ion-item>
+
+                <ion-item *ngIf=" sa.attr_type == 'list' " class="item-margin" >
+                    <ion-label>{{sa.name}}</ion-label>
+                    <ion-select [(ngModel)]="subcategory_data[sa.id]">
+                        <ion-option *ngFor="let op of sa.options" value="{{op}}" >{{op}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+        </div> 
+    
+        <div *ngIf="attributes.tags">
+            <ion-list-header class="item item-ios list-header list-header-ios screen-header" > Tags </ion-list-header>
+            <ion-item>
+                <ion-label>Select Tags</ion-label>
+                <ion-select [(ngModel)]="tags" multiple="true">
+                    <ion-option *ngFor="let t of attributes.tags" value="{{t.id}}">{{t.tag_name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </div>
+
+        <ion-grid *ngIf="files?.length == 0 && attributes.tags" > 
+            <ion-row text-center>
+                <ion-col>
+                    <button ion-button outline icon-start (click)="presentActionSheet()"> <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon> Upload files </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-list-header class="my-header item item-ios list-header list-header-ios"  *ngIf="files?.length > 0" > 
+            Select Files
+        </ion-list-header>
+        <ion-list *ngIf="files?.length > 0" >
+            <ion-item-sliding *ngFor="let f of files; let i = index " >
+                <ion-item>
+                    <ion-thumbnail item-start>
+                        <img class="uploaded-img" *ngIf="f.is_captured" [src]="DomSanitizer.bypassSecurityTrustUrl(f.path)" >
+                        <img class="uploaded-img" [src]="getImage(f.path)" *ngIf="!f.is_captured">
+                    </ion-thumbnail>
+
+                    <h2> <input class="file-input" [(ngModel)]="f.user_defined_name" type="text" > </h2>
+                    <p *ngIf="f.attribute_id > 0" text-capitalize>
+                        {{f.category_attribute_name}}
+                        <button class="remove-btn" ion-button clear item-end color="danger" (click)="RemoveAttributes(i)">
+                            <ion-icon name="ios-trash"></ion-icon>
+                        </button>
+                    </p>
+                    <button class="add-btn" ion-button clear item-end (click)="assignAttributes(i)" >
+                        <ion-icon name="{{f.attribute_id > 0 ? 'md-checkbox' : 'md-square-outline' }}"></ion-icon>
+                    </button>
+                  
+                </ion-item>
+                
+                <ion-item-options side="right">
+                    <button ion-button (click)="deleteFile(i)"  color="danger">
+                        <ion-icon name="ios-trash"></ion-icon>
+                    </button> 
+                </ion-item-options>
+
+            </ion-item-sliding>
+        </ion-list>
+    </ion-list>
+</ion-content>
+
+

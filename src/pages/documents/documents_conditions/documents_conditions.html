@@ -1,0 +1,131 @@
+
+<ion-header>
+
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Documents Conditions</ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="resetConditions()" clear>Reset</button>
+    </ion-buttons>
+  </ion-navbar>
+ 
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="company-bannner" *ngIf="org_name"  > 
+    <div text-capitalize >
+      <span class="company-title"> {{org_name}} </span>
+    </div>
+  </div>
+
+
+  <ion-item class="pd-bt-10"  *ngIf="!reload">
+    <ion-label>Category</ion-label>
+    <ion-select [(ngModel)]="category" multiple="true" (ionChange)="catChange()">
+      <ion-option *ngFor="let ct of categories" value="{{ct.id}}" >{{ct.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-item class="pd-bt-10"  *ngIf="!reload">
+    <ion-label>Sub Category</ion-label>
+    <ion-select [(ngModel)]="subcategory" multiple="true" (ionChange)="subCatChange()">
+      <ion-option *ngFor="let st of subcategories" value="{{st.id}}"> {{userLang(st.name)}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <div *ngFor=" let cond of conditions; let i = index " >
+    
+    <div class="my-list-condition-ios"  *ngIf=" i != 0 " >
+     
+      <div class="my-line-ios">
+      </div>
+
+      <div class="wrapper-ion">
+        <ion-item class="my-list-item-ios">
+          <ion-select placeholder= "Select" [(ngModel)]="conditions[i].logical" >
+            <ion-option value='AND'> AND </ion-option>
+            <ion-option value='OR'> OR </ion-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+    </div>
+    
+
+    <ion-card class="card card-ios item-card-custom">
+       
+        <ion-card-header>
+          <span>Condition {{i + 1}}</span>
+          <ion-icon (click)="removeCondition(i)" *ngIf="i > 0" style="float: right;color:#EF4646;font-size: 1.6em;" ios="ios-close-circle"  md="md-close-circle"></ion-icon>
+        </ion-card-header>
+
+        <ion-card-content>
+
+          <ion-item class="custom-item" >
+           <ion-label>Attributes</ion-label>
+           <ion-select [(ngModel)]="conditions[i].other"  (ionChange)="changeType(i)">
+              <ion-option  value='{ "id": "designation" , "for":"system_attr", "type" : "text" }' > Designation </ion-option>
+              <ion-option *ngFor="let ck of cat_attrs_keys;" value='{ "id":{{cat_attrs[ck].id}},"for":"cat", "type" : "{{cat_attrs[ck].attr_type}}" }'  > {{ userLang( cat_attrs[ck].name , 'object') }} </ion-option>
+              <ion-option *ngFor="let sk of sub_cat_attrs_keys;" value='{ "id":{{sub_cat_attrs[sk].id}},"for":"subcat", "type" : "{{sub_cat_attrs[sk].attr_type}}" }' > {{ userLang( sub_cat_attrs[sk].name , 'object') }} </ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="custom-item" >
+           <ion-label>Operators</ion-label>
+           <ion-select [(ngModel)]="conditions[i].operator">
+              <ion-option *ngFor="let op of conditions[i].operators;" value="{{op.value}}" > {{op.title}} </ion-option>
+            </ion-select>
+          </ion-item>
+          
+          <ion-item>
+            <ion-input [type]="conditions[i].type" *ngIf="conditions[i].type != 'date'" [(ngModel)]="conditions[i].value"  placeholder="Value"> </ion-input>
+           
+            <ion-datetime displayFormat="DD/MM/YYYY" *ngIf="conditions[i].type == 'date'"  pickerFormat="DD MMM YYYY" [(ngModel)]="conditions[i].value" placeholder="Value" ></ion-datetime>
+            
+           <!--  <ion-select [(ngModel)]="conditions[i].operator" *ngIf="conditions[i].type == 'list' && conditions[i].type == 'cat'" >
+              <ion-option *ngFor="let op of conditions[i].operators;" value="{{op.value}}" > {{op.title}} </ion-option>
+            </ion-select>
+
+            <ion-select [(ngModel)]="conditions[i].operator" *ngIf="conditions[i].type == 'list' && conditions[i].type == 'subcat'" >
+              <ion-option *ngFor="let op of conditions[i].operators;" value="{{op.value}}" > {{op.title}} </ion-option>
+            </ion-select> -->
+
+          </ion-item>
+
+        </ion-card-content>
+
+    </ion-card>
+       
+  </div>
+
+
+  <ion-fab right bottom *ngIf="!reload"> 
+    <button ion-fab (click)="addConditions()" color="dark"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+   <ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning"></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <button block ion-button class="custom-button" (click)="applyConditions()" >Apply</button>
+</ion-footer>

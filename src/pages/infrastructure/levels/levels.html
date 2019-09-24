@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+    <ion-title *ngIf="infrastructure">
+      {{location(infrastructure.location.name)}}
+    </ion-title>
+  </ion-navbar>
+  <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)">
+  </ion-searchbar>
+
+  <ion-segment color="primary">
+    <ion-segment-button>
+      {{infrastructure ? infrastructure.parent_location.name : ' '}}
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="infrastructure">
+    
+    <ion-item *ngFor="let t of infrastructure.locations">
+      <div (click)='next(t);' >
+        <h2>{{t.name}}</h2>
+        <p>{{t.barcode + t.parent_barcode}}</p>
+      </div>
+      <button class="more-btn" ion-button (click)='presentActionSheet(t);' item-end clear> <ion-icon name="md-more" ></ion-icon></button>
+
+    </ion-item>
+
+  </ion-list>
+
+  <ion-grid class="grid-reload" *ngIf="infrastructure && infrastructure.locations?.length == 0"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+          <p>No Record Found.</p>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+  
+
+</ion-content>
+
+<ion-footer>
+
+  <ion-item class="parent-levels">
+    <ion-badge  *ngIf="infrastructure" (click)="back(infrastructure.parent_location, i)" >  <ion-icon name="arrow-back"></ion-icon> {{infrastructure.parent_location.location_name}}</ion-badge>
+  </ion-item>
+
+  <ion-fab right bottom *ngIf="!reload">
+    <button class="add-btn" ion-fab (click)="create()" ><ion-icon class="add-icon" name="add"  ></ion-icon></button>
+  </ion-fab>
+</ion-footer>

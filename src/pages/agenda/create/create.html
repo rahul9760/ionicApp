@@ -1,0 +1,267 @@
+<ion-header>
+ <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create
+    </ion-title>
+    <ion-buttons right >
+      <button ion-button *ngIf="!show_form" (click)="save()" clear>Save</button>
+      <button ion-button *ngIf="show_form" (click)="select()" clear>Select</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+
+  <ion-list *ngIf="!show_form">
+
+    <ion-item class="calendar-item">
+      <ion-calendar [(ngModel)]="new_task.expecting_date"
+                    (onChange)="onCalender($event)"
+                    [type]="string"
+                    [format]="'DD MMM YYYY H:mm'">
+      </ion-calendar>
+    </ion-item>
+
+    <ion-list-header [class]="item_header_class"  [style.color]="color" >
+      Name *
+    </ion-list-header>
+
+    <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="new_task.name" name="task_name" required placeholder="Name"/>
+    </ion-item>
+
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Description *
+    </ion-list-header>
+
+    <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="new_task.description" name="description" required placeholder="Description"/>
+    </ion-item>
+
+    <div *ngIf="current_user && !current_user.is_private" >
+      <ion-list-header [class]="item_header_class" [style.color]="color" >
+        Attendees
+      </ion-list-header>
+
+      <ion-item (click)="searchUsers()">
+
+         
+         <ion-select multiple="true" [(ngModel)]="new_task.attendees" class="item-margin" placeholder="Attendees"  disabled>
+          <ion-option *ngFor="let attendee of users" value="{{attendee.user_id}}" > 
+            {{ attendee.name }} 
+          </ion-option>
+         </ion-select>
+         
+         <!-- <input [class]="input_class" type="text" [(ngModel)]="new_task.attendees" (click)="searchUsers()"  placeholder="Attendees"/> -->
+
+      </ion-item>
+    </div>
+
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Durations
+    </ion-list-header>
+    
+    <ion-item>
+       <ion-select [(ngModel)]="new_task.duration_type" class="item-margin">
+        <ion-option value="days" > Day </ion-option>
+        <ion-option value="hours" > Hour </ion-option>
+        <ion-option value="minutes" > Minutes </ion-option>
+       </ion-select>
+    </ion-item>
+
+    <ion-card>
+      <ion-card-content>
+
+        <div *ngIf="new_task.duration_type == 'days'" >
+          
+          <ion-item>
+             <ion-label fixed>Day</ion-label>
+             <ion-input type="number" [(ngModel)]="new_task.days" name="days" required ></ion-input>
+          </ion-item>
+
+          <ion-item>
+             <ion-label fixed>Hour</ion-label>
+             <ion-select [(ngModel)]="new_task.hours" class="item-margin">
+              <ion-option *ngFor="let h of range(0,24)" value="{{h}}" >{{h}}</ion-option>
+             </ion-select>
+          </ion-item>
+
+          <ion-item>
+             <ion-label fixed>Minutes</ion-label>
+             <ion-select [(ngModel)]="new_task.minutes" class="item-margin">
+              <ion-option *ngFor="let m of range(0,60)" value="{{m}}" >{{m}}</ion-option>
+             </ion-select>
+          </ion-item>
+
+        </div>
+
+        <div *ngIf="new_task.duration_type == 'hours'" >
+
+          <ion-item>
+             <ion-label fixed>Hour</ion-label>
+             <ion-input type="number" [(ngModel)]="new_task.hours" name="hours" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+             <ion-label fixed>Minutes</ion-label>
+             <ion-select [(ngModel)]="new_task.minutes" class="item-margin">
+              <ion-option *ngFor="let m of range(0,60)" value="{{m}}" >{{m}}</ion-option>
+             </ion-select>
+          </ion-item>
+
+        </div>
+
+        <div *ngIf="new_task.duration_type == 'minutes'" >
+
+          <ion-item>
+              <ion-label fixed>Minutes</ion-label>
+              <ion-input type="number" [(ngModel)]="new_task.minutes" name="minutes" required ></ion-input>
+          </ion-item>
+
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Priority
+    </ion-list-header>
+
+    <ion-item>
+       <ion-select [(ngModel)]="new_task.priority" class="item-margin">
+        <ion-option value="none" > None </ion-option>
+        <ion-option value="low" > Low </ion-option>
+        <ion-option value="medium" > Medium </ion-option>
+        <ion-option value="high" > High </ion-option>
+       </ion-select>
+    </ion-item>
+
+
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Status
+    </ion-list-header>
+
+    <ion-item>
+       <ion-select [(ngModel)]="new_task.status" class="item-margin">
+        <ion-option value="too_late" > Too late </ion-option>
+        <ion-option value="to_be_done" > To be done </ion-option>
+        <ion-option value="done" > Done </ion-option>
+        <ion-option value="high"> High </ion-option>
+       </ion-select>
+    </ion-item>
+
+
+    <ion-list-header [class]="item_header_class" [style.color]="color">
+      Tags 
+    </ion-list-header>
+
+      <ion-item>
+        <ion-label>Select Tags</ion-label>
+        
+        <ion-select [(ngModel)]="new_task.tags" multiple="true">
+          <ion-option *ngFor="let t of tags" value="{{t.id}}">{{t.tag_name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+    
+
+    <ion-list-header [class]="item_header_class" [style.color]="color">
+      <ion-label class="recurrence-label" [style.color]="color" color="primary" text-uppercase> Custom recurrence</ion-label>
+      <ion-toggle [(ngModel)]="new_task.recurrence" item-end></ion-toggle>
+    </ion-list-header>
+
+    <ion-list *ngIf="new_task.recurrence" class="recurrence">
+
+      <ion-item>
+        <ion-label class="recurrence-label" [style.color]="color" color="primary" fixed text-uppercase> Repeat Every</ion-label>
+        <ion-input type="number" [(ngModel)]="new_task.repeat_every" name="repeat_every" placeholder="Number" ></ion-input>
+      </ion-item>
+
+       <ion-item>
+         <ion-select [(ngModel)]="new_task.repeat_type" class="item-margin">
+            <ion-option value="day" > Day </ion-option>
+            <ion-option value="week" > Week </ion-option>
+            <ion-option value="month" > Month </ion-option>
+            <ion-option value="year" > Year </ion-option>
+         </ion-select>
+      </ion-item>
+
+
+      <ion-list-header [class]="item_header_class" [style.color]="color" >
+       Repeat on
+      </ion-list-header>
+       <ion-item class="days">
+         <button ion-button (click) = "updateDay(1)" [color]="new_task.repeat_on == 1 ? 'primary' : 'light'" small>M</button>
+         <button ion-button (click) = "updateDay(2)" [color]="new_task.repeat_on == 2 ? 'primary' : 'light'" small>T</button>
+         <button ion-button (click) = "updateDay(3)" [color]="new_task.repeat_on == 3 ? 'primary' : 'light'" small>W</button>
+         <button ion-button (click) = "updateDay(4)" [color]="new_task.repeat_on == 4 ? 'primary' : 'light'" small>T</button>
+         <button ion-button (click) = "updateDay(5)" [color]="new_task.repeat_on == 5 ? 'primary' : 'light'" small>F</button>
+         <button ion-button (click) = "updateDay(6)" [color]="new_task.repeat_on == 6 ? 'primary' : 'light'" small>S</button>
+         <button ion-button (click) = "updateDay(7)" [color]="new_task.repeat_on == 7 ? 'primary' : 'light'" small>S</button>
+      </ion-item>
+
+      <ion-list-header [class]="item_header_class" [style.color]="color" >
+       End
+      </ion-list-header>
+
+      <ion-list radio-group [(ngModel)]="new_task.end">
+        <ion-item>
+          <ion-label>Never</ion-label>
+          <ion-radio value="never" checked></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>On</ion-label>
+          <ion-radio value="on"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>After</ion-label>
+          <ion-radio value="after"></ion-radio>
+        </ion-item>
+      </ion-list>
+
+      <ion-item *ngIf=" new_task.end != 'never' ">
+        
+         <ion-datetime [(ngModel)]="new_task.end_on" *ngIf=" new_task.end == 'on' " class="item-margin" displayFormat="DD/MM/YYYY" no-padding  pickerFormat="DD MMM YYYY" placeholder="End On" ></ion-datetime>
+
+         <ion-input [class]="input_class" [(ngModel)]="new_task.end_after" *ngIf=" new_task.end == 'after' " type="number" name="end_after"  placeholder="End After" ></ion-input>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ion-list>
+
+
+  <ion-list *ngIf="show_form" >
+
+      <ion-item>
+        <ion-label>Send notification to user(s) </ion-label>
+        <ion-checkbox [(ngModel)]="send_notification" item-end></ion-checkbox>
+      </ion-item>
+
+      <ion-item *ngFor="let user of users; let i = index "  >
+        <ion-avatar item-start>
+          <img src="{{getUrl(user)}}">
+        </ion-avatar>
+        <ion-label>
+           <h2 text-capitalize >{{user.name}}</h2>
+           <p text-capitalize>{{user.org_name}}</p>
+        </ion-label>
+        <ion-checkbox [(ngModel)]="selected_users[user.user_id]" item-end ></ion-checkbox>
+      </ion-item>
+
+  </ion-list>
+
+</ion-content>
+      
+   
+

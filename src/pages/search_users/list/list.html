@@ -1,0 +1,188 @@
+<ion-header>
+ <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>
+      Requests
+    </ion-title>
+
+  </ion-navbar>
+
+  <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)" placeholder="Search Users">
+  </ion-searchbar>
+
+</ion-header>
+
+<ion-content class="list-avatar-page">
+   	
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list *ngIf="search != ''">
+
+      <ion-item *ngFor="let user of users; let i = index; "  >
+        <ion-avatar item-start>
+          <img src="{{avatar(user)}}">
+        </ion-avatar>
+        <ion-label>
+          <h2 text-capitalize >{{user.name}}</h2>
+          <p text-capitalize>{{user.org_name}}</p>
+        </ion-label>
+        
+
+        <button ion-button clear item-end icon-only (click)="sendRequest(user, i)" *ngIf=" sent_requests[i] == false && requestType(user) == 'new' ">
+          <ion-icon name="person-add"></ion-icon>
+        </button>
+
+        <button ion-button color="light" item-end  *ngIf=" sent_requests[i] == false && requestType(user) == 'rejected' " (click)="user_resend_request(user)" >
+          Resend
+        </button>
+
+        <button ion-button color="light" item-end  *ngIf=" sent_requests[i] == false && requestType(user) == 'pending' " >
+          Pending
+        </button>
+
+        <button ion-button color="light" item-end  *ngIf=" sent_requests[i] == true" >
+          Sent
+        </button>
+
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list  *ngIf="search == '' && accepted?.length > 0 && request == 'accepted'" >
+
+      <ion-item *ngFor="let request of accepted; let i = index "  >
+        <ion-avatar item-start>
+          <img src="{{avatar(getRequestUser(request))}}">
+        </ion-avatar>
+        <ion-label>
+            
+            <h2 text-capitalize >  
+                {{  getRequestUser(request)['name'] }}
+            </h2>
+            
+            <p text-capitalize>
+              {{ current_user.user_org_id == request.from_org_id ? request.from_org.name : request.from_org.name }}
+            </p>
+        
+        </ion-label>
+
+        <!-- Reject Request -->
+        <button ion-button clear item-end icon-only color="danger" (click)="rejectRequest(request)" >
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list  *ngIf="search == '' && sent?.length > 0 && request == 'sent'" >
+      <ion-item *ngFor="let request of sent; let i = index "  >
+        <ion-avatar *ngIf="request.with_user.profile_pic != false" item-start>
+          <img src="{{avatar(request.with_user)}}">
+        </ion-avatar>
+        <ion-avatar *ngIf="request.with_user.profile_pic == false" item-start>
+          <p>No Avatar</p>
+        </ion-avatar>
+        <ion-label>
+           <h2 text-capitalize >{{request.with_user.name}}</h2>
+           <p text-capitalize>{{request.with_user.org_name}}</p>
+        </ion-label>
+        <button *ngIf="request.status == 0" ion-button small item-end [color]="getStatusColor(request.status)">{{getStatus(request.status)}}</button>
+        <button *ngIf="request.status == -1" ion-button small item-end (click)="resend(request)" >
+          Resend
+        </button>
+      </ion-item>
+    </ion-list>
+
+  	<ion-list  *ngIf="search == '' && recieved?.length > 0 && request == 'recieved'">
+      <ion-item *ngFor="let request of recieved; let i = index ">
+        <ion-avatar item-start>
+          <img src="{{avatar(request.from_user)}}">
+        </ion-avatar>
+        <ion-label>
+           <h2 text-capitalize >{{request.from_user.name}}</h2>
+           <p text-capitalize>{{request.from_user.org_name}}</p>
+        </ion-label>
+        
+        <!-- Confirm Request -->
+        <button ion-button clear item-end icon-only (click)="acceptRequest(request)" >
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </button>
+
+        <!-- Reject Request -->
+        <button ion-button clear item-end icon-only (click)="rejectRequest(request)" color="danger" >
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+    <!-- Messages if no Record Found -->
+
+    <ion-grid class="grid-reload" *ngIf="search !== '' && is_searched == false && !reload && users?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" name="sad" ></ion-icon><p>
+          <p>No User Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="grid-reload" *ngIf="search ==  '' && request == 'accepted' && !reload && accepted?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" name="sad" ></ion-icon><p>
+          <p>No Accepted Request Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="grid-reload" *ngIf="search ==  '' && request == 'sent' && !reload && sent?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" name="sad" ></ion-icon><p>
+          <p>No Sent Request Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="grid-reload" *ngIf="search == '' && request == 'recieved' && !reload && recieved?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" name="sad" ></ion-icon><p>
+          <p>No Recieved Request Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="search-spinner" *ngIf="is_searched">
+      <ion-spinner ></ion-spinner>
+    </div> 
+
+</ion-content>
+
+<ion-footer>
+   <ion-toolbar no-border-top no-border-bottom>
+    <ion-segment [(ngModel)]="request" (click) = "buttonClick()" >
+      <ion-segment-button value="accepted">
+        Accepted
+      </ion-segment-button>
+      <ion-segment-button value="sent">
+        Sent
+      </ion-segment-button>
+      <ion-segment-button value="recieved" checked>
+        Recieved
+        <ion-badge *ngIf="recieved.length > 0" class="custom-bagde-footer" color="danger">{{recieved.length}}</ion-badge>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

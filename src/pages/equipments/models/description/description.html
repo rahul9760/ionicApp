@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Model Description
+    </ion-title>
+    <ion-buttons right >
+      <button *ngIf="is_edit" ion-button (click)="update()" clear>Update</button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-segment color="primary" >
+    <ion-segment-button>
+      {{ level_names }}
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="model" >
+      <div *ngFor="let attr of attributes" >
+
+          <ion-list-header class="item item-ios list-header list-header-ios" [style.color]="color" >
+            {{ attr.name }}
+          </ion-list-header>
+
+          <ion-item *ngIf="!is_edit" >
+            {{ attr.attr_type == 'list' ? 
+               attr.options[model.attrs_data[attr.id]]
+             : model.attrs_data[attr.id]}}
+        
+          </ion-item>
+
+          <ion-item *ngIf="is_edit" >
+             
+             <input [class]="input_class" 
+                    type="text"
+                    [(ngModel)]="model.attrs_data[attr.id]"
+                    required 
+                    *ngIf=" attr.attr_type == 'text' || attr.attr_type == 'number' "
+                     />
+    
+              <ion-datetime [class]="input_class" 
+                            displayFormat="DD/MM/YYYY" 
+                            [style.padding]="0"  
+                            pickerFormat="DD MMM YYYY" 
+                            [(ngModel)]="model.attrs_data[attr.id]"
+                            [disabled]="attr.disabled" 
+                            *ngIf=" attr.attr_type == 'date' " ></ion-datetime>
+              
+              <ion-select class="item-margin" 
+                          [(ngModel)]="model.attrs_data[attr.id]"
+                          *ngIf=" attr.attr_type == 'list' " 
+                          [disabled]="attr.disabled" >
+                <ion-option *ngFor="let op of attr.options; let i = index" [value]="i" >{{op}}</ion-option>
+              </ion-select>
+
+          </ion-item>
+
+      </div>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+   
+   <ion-segment color="light" *ngIf="model">
+    <ion-segment-button (click) = "link('contact_internal')"  value="contact_internal">
+      <ion-icon name="contacts" class="contact_internal" >
+        <ion-badge class="custom-bagde-footer" color="primary">0</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('contact_external')"  value="contact_external">
+      <ion-icon name="contacts" class="contact_external" >
+        <ion-badge class="custom-bagde-footer" color="primary">0</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('agenda')"  value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">0</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('document')" value="document">
+      <ion-icon name="document" class="document" >
+        <ion-badge class="custom-bagde-footer" color="primary">0</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('infrastructure')" value="infrastructure">
+      <ion-icon name="cube" class="infrastructure" >
+        <ion-badge class="custom-bagde-footer" color="primary">0</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-fab class="custom-ion-fab" right bottom *ngIf="!reload && model">
+    <button ion-fab class="construct-edit-btn" (click)="edit()" *ngIf="!is_edit"  >
+      <ion-icon class="construct-icon" name="brush" style="" ></ion-icon>
+    </button>
+    <button ion-fab class="cancel-edit-btn" (click)="cancelEdition()" *ngIf="is_edit"  > 
+      <ion-icon class="cancel-icon" name="close"></ion-icon> 
+    </button>
+  </ion-fab>
+
+</ion-footer>

@@ -1,0 +1,21 @@
+page-profile {
+	
+	.profile .list .item-inner ion-icon {
+	    font-size: 1.2em;
+	    color: #488aff;
+	    line-height: 27px;
+	}
+
+	.list {
+    	margin: -1px 0 15px;
+	}
+
+	.list > .item-block:last-child {
+	    border-bottom: 0.55px solid #E0E0E0;
+	}
+
+	.list > .item-block:first-child {
+	    border-top: 0.55px solid #E0E0E0;
+	}
+
+}

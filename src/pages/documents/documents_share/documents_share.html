@@ -1,0 +1,70 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+    <ion-title>
+      Users
+    </ion-title>
+     <ion-buttons right>
+      <button ion-button (click)="share()" clear>Share</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+   
+    <ion-list >
+
+      <ion-item>
+        <ion-label>Send notification to user(s) </ion-label>
+        <ion-checkbox [(ngModel)]="send_notification" item-end></ion-checkbox>
+      </ion-item>
+
+      <ion-item *ngFor="let user of users; let i = index "  >
+        <ion-avatar item-start>
+          <img src="{{getUrl(user)}}">
+        </ion-avatar>
+        <ion-label>
+           <h2 text-capitalize >{{user.name}}</h2>
+           <p text-capitalize>{{user.org_name}}</p>
+        </ion-label>
+        <ion-checkbox [(ngModel)]="selected_users[i]" item-end (ionChange)="setPermissions(i)" ></ion-checkbox>
+      </ion-item>
+
+    </ion-list>
+
+
+    <ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid class="grid-reload" *ngIf=" !reload && users?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad"></ion-icon><p>
+          <p>No Record Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+</ion-content>
+

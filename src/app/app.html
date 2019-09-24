@@ -1,0 +1,68 @@
+<ion-menu [content]="content">
+  <ion-header hideBackButton="true">
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    
+    <button class="dashboard-profile-button" menuClose ion-item (click)="openPage(profile)" >
+      <ion-avatar item-start>
+        <img class="profile-img dashboard" [src]="current_user.private_image_path">
+      </ion-avatar>
+      <h2>{{current_user.username}}</h2>
+      <p>{{current_user.email}}</p>
+    </button>
+
+    <ion-list *ngIf="current_user && !current_user.is_private" >
+      
+      <div class="sidenav" *ngFor="let p of pages">
+        
+        <!-- If the item contains submenus - Disable close menu on click -->
+        <ion-item *ngIf="p.submenu" (click)="openPage(p)" >
+           <ion-icon name="{{p.icon}}" item-start [ngClass]="p.type"></ion-icon> 
+           {{p.title}}
+        </ion-item>
+
+        <!-- If the item does not contains submenus - Close menu on click -->
+        <ion-item *ngIf="!p.submenu"  menuClose (click)="openPage(p)" >
+           <ion-icon name="{{p.icon}}" item-start [ngClass]="p.type"></ion-icon> 
+           {{p.title}}
+        </ion-item>
+
+        <!-- render the submenus -->
+        <ion-item-group submenu 
+                        *ngIf="p.submenu && submenu" 
+                        [class]="p.submenu ? 'sidemenu visible' : 'sidemenu hidden' ">
+          
+          <ion-item menuClose 
+                    *ngFor="let submenu of p.submenus" 
+                    submenu-item 
+                    (click)="openSubPage(submenu)">
+            <ion-icon [name]="submenu.icon" item-start [ngClass]="p.type"></ion-icon> 
+            {{submenu.title}}
+          </ion-item>
+
+        </ion-item-group>
+
+      </div>
+
+      <ion-item menuClose (click)="logout()">
+        <ion-icon name="log-out" item-start class="logout"></ion-icon> 
+        Logout
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list *ngIf="current_user && current_user.is_private" >
+      <button menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)">
+         <ion-icon name="{{p.icon}}" item-start [ngClass]="p.type"></ion-icon> {{p.title}}
+      </button>
+    </ion-list>
+
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

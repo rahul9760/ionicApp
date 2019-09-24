@@ -1,0 +1,33 @@
+
+page-articles {
+
+ .custom-bagde-footer {    
+    width: 16px;
+    height: 16px;
+    padding: 3px 3px;
+    font-size: 8px;
+    top: 2%;
+    right: 30%;
+    position: absolute;
+    border-radius: 16px;
+  }
+
+   .segment .segment-button {
+    opacity:1;
+    font-size:1em;
+    color:#505050;
+    background:#f1f1f1;
+      direction: rtl;
+   }
+   
+   .segment-ios-primary .segment-button {
+      border:0;
+   }
+
+  .list {
+    padding-bottom:40px;
+  }
+  
+}
+
+

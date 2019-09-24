@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Change {{title}}
+    </ion-title>
+     <ion-buttons right>
+      <button ion-button (click)="update()" clear>Update</button>
+    </ion-buttons>
+  </ion-navbar> 
+</ion-header>
+
+
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+      </ion-col>
+      <ion-col col-7>
+        <ion-title>
+          Change {{title}}
+        </ion-title>
+      </ion-col>
+      <ion-col col-3>
+        <ion-buttons>
+          <button ion-button (click)="update()" clear>Update</button>
+        </ion-buttons>
+      </ion-col>  
+    </ion-row>
+  </ion-grid>  -->
+
+<ion-content class="profile">
+  <ion-grid> 
+    <ion-row text-center>
+      <ion-col>
+        <p><ion-icon class="reset-icon" name="ios-key"></ion-icon><p>
+        <h3>Reset your {{title}} ?</h3>
+        <p>Fill your old password to create a new one </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item>  
+      <ion-input type="password" placeholder="Current Password" name="cp" (keyup)="updatePin($event,'current')" [(ngModel)]="currentp"  ></ion-input> 
+    </ion-item>
+    <ion-item>  
+      <ion-input type="password" placeholder="New {{title}}" name="newp" (keyup)="updatePin($event,'new')" [(ngModel)]="newp"  >    </ion-input> 
+    </ion-item>
+  	<ion-item>  
+  		<ion-input type="password" placeholder="Confirm {{title}}" name="confirmp" (keyup)="updatePin($event,'confirm')" [(ngModel)]="confirmp"></ion-input> 
+  	</ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Notifications  
+    </ion-title>
+   <ion-buttons right>
+      <button ion-button (click)="save()" clear>save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="list-avatar-page">
+  <p>
+    The number of days required for automatic deletion of notifications
+  </p>
+  <ion-list>
+    <ion-list-header>
+      Days
+      <ion-badge item-end>{{days}}</ion-badge>
+    </ion-list-header>
+   
+    <ion-item>
+      <ion-icon name="notifications" item-start color="danger"></ion-icon>
+      <ion-label>Automatic Deletion</ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="is_enabled" ></ion-toggle>
+    </ion-item>
+
+     <ion-item>
+       <ion-range min="1" max="100" step="1" [(ngModel)]="days" [disabled]="!is_enabled">
+         <ion-icon small range-left name="minus"></ion-icon>
+         <ion-icon range-right name="plus"></ion-icon>
+       </ion-range>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

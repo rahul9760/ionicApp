@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      STEP 1
+    </ion-title>   <ion-buttons right>
+      <button ion-button (click)="next()" clear>Next</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="logo">
+      <img src="assets/img/email_logo_image.png">
+  </div>
+  
+  <ion-list>
+    
+    <ion-item>
+      <ion-input type="text" name="username" [(ngModel)]="credentials.username" required placeholder="Username"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" name="password" [(ngModel)]="credentials.password" required placeholder="Password"></ion-input>
+    </ion-item>
+  
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create Employee
+    </ion-title>
+
+     <ion-buttons right>
+      <button ion-button (click)="save()" clear>save</button>
+    </ion-buttons>
+    
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-list *ngIf="employee_data">
+
+      <ion-list-header [class]="header_class" >
+        Person
+        <button class="add-person" ion-button clear item-end  (click)="addPerson()" > 
+          <ion-icon name="add-circle" class="add_new"></ion-icon> 
+        </button>
+      </ion-list-header>
+      
+      <ion-item>
+         <ion-select [(ngModel)]="employee.person" class="item-margin">
+          <ion-option  *ngFor="let employee of employee_data.persons" value="{{employee.id}}"> 
+            {{employee.first_name + ' ' + employee.last_name}}
+          </ion-option>
+         </ion-select>
+      </ion-item>
+   
+
+      <ion-list-header [class]="header_class">
+        Email
+      </ion-list-header>
+
+      <ion-item>
+        <input [class]="input_class" type="email" [(ngModel)]="employee.email" name="email" required placeholder="Email"/>
+      </ion-item>
+
+      <div *ngFor="let emp of employee_data.attributes.employee">
+          
+        <ion-list-header [class]="header_class">
+          {{emp.name}}
+        </ion-list-header>
+
+        <ion-item>
+          <input [class]="input_class"  type="text" [(ngModel)]="employee.attributes[emp.id]" name="email" required placeholder="{{emp.name}}"/>
+        </ion-item>
+
+      </div>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>

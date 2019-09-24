@@ -1,0 +1,74 @@
+{
+  "_args": [
+    [
+      "ionic-plugin-deeplinks@1.0.15",
+      "/var/www/html/luckApp&web/velvetFM___/velvetFM___"
+    ]
+  ],
+  "_from": "ionic-plugin-deeplinks@1.0.15",
+  "_id": "ionic-plugin-deeplinks@1.0.15",
+  "_inBundle": false,
+  "_integrity": "sha1-ZV3uNApLGfuflh8ZXw6fCP/QLEo=",
+  "_location": "/ionic-plugin-deeplinks",
+  "_phantomChildren": {
+    "sax": "1.2.4",
+    "xmldom": "0.1.27"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "ionic-plugin-deeplinks@1.0.15",
+    "name": "ionic-plugin-deeplinks",
+    "escapedName": "ionic-plugin-deeplinks",
+    "rawSpec": "1.0.15",
+    "saveSpec": null,
+    "fetchSpec": "1.0.15"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ionic-plugin-deeplinks/-/ionic-plugin-deeplinks-1.0.15.tgz",
+  "_spec": "1.0.15",
+  "_where": "/var/www/html/luckApp&web/velvetFM___/velvetFM___",
+  "author": {
+    "name": "Max Lynch",
+    "email": "max@ionic.io"
+  },
+  "bugs": {
+    "url": "https://github.com/driftyco/ionic-plugin-deeplinks/issues"
+  },
+  "cordova": {
+    "id": "ionic-plugin-deeplinks",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "dependencies": {
+    "mkpath": ">=1.0.0",
+    "node-version-compare": ">=1.0.1",
+    "plist": ">=1.2.0",
+    "xml2js": ">=0.4"
+  },
+  "description": "Ionic Deeplinks Plugin",
+  "homepage": "https://github.com/driftyco/ionic-plugin-deeplinks#readme",
+  "issue": "https://github.com/driftyco/ionic-plugin-deeplinks/issues",
+  "keywords": [
+    "ionic",
+    "cordova",
+    "deeplink",
+    "deeplinks",
+    "mobile",
+    "hybrid",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "license": "MIT",
+  "name": "ionic-plugin-deeplinks",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driftyco/ionic-plugin-deeplinks.git"
+  },
+  "version": "1.0.15"
+}

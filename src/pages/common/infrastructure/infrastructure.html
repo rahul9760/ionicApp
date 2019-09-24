@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create Infrastructure
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios,android">Cancel</span>
+      </button>
+    </ion-buttons>
+    <ion-buttons right >
+      <button ion-button (click)="create()" clear>Save</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <ion-item *ngIf="levels.one" >
+      <ion-label >{{location.one.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('one', 0, 1)">
+        <ion-item  item-start *ngIf = "parentLocation.one">{{parentLocation.one}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+    
+    <ion-item *ngIf="levels.two" >
+      <ion-label>{{location.two.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('two', 1, 2)">
+        <ion-item  item-start *ngIf = "parentLocation.two">{{parentLocation.two}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.three" >
+      <ion-label>{{location.three.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('three', 2, 3)">
+        <ion-item  item-start *ngIf = "parentLocation.three">{{parentLocation.three}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+    
+
+    <ion-item *ngIf="levels.four" >
+      <ion-label>{{location.four.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('four', 3, 4)">
+        <ion-item  item-start *ngIf = "parentLocation.four">{{parentLocation.four}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.five" >
+      <ion-label>{{location.five.name}}</ion-label>
+      <button class="show-list" class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('five', 4, 5)">
+        <ion-item  item-start *ngIf = "parentLocation.five">{{parentLocation.five}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.six" >
+      <ion-label>{{location.six.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('six', 5, 6)">
+        <ion-item  item-start *ngIf = "parentLocation.six">{{parentLocation.six}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.seven" >
+      <ion-label>{{location.seven.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('seven', 6, 7)" >
+        <ion-item  item-start *ngIf = "parentLocation.seven">{{parentLocation.seven}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.eight" >
+      <ion-label>{{location.eight.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('eight', 7, 8)">
+        <ion-item  item-start *ngIf = "parentLocation.eight">{{parentLocation.eight}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.nine" >
+      <ion-label>{{location.nine.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('nine', 8, 9)">
+        <ion-item  item-start *ngIf = "parentLocation.nine">{{parentLocation.nine}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="levels.ten" >
+      <ion-label>{{location.ten.name}}</ion-label>
+      <button class="show-list" ion-button item-end icon-only color="light" (click)="showListLocation('ten', 9, 10)">
+        <ion-item  item-start *ngIf = "parentLocation.ten">{{parentLocation.ten}}</ion-item>
+        <ion-icon item-end name="arrow-dropdown" outline></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf = "noDataFound">
+      <ion-label class='add-new-location' (click) = "showModal()">
+        <ion-icon color='primary' name="add-circle" ></ion-icon> 
+        <span>Add new</span> 
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

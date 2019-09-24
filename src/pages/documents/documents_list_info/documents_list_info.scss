@@ -1,0 +1,71 @@
+
+page-list-documents-info {
+
+.icard-header p{
+	color:gray;
+}
+
+.icard-header ion-item-group p{
+	padding-bottom: 5px;
+}
+
+.card-content-ios {
+    font-size: 1.7rem;
+}
+
+.doc-file {
+   max-height: 20px;
+   max-width: 20px;
+}
+ .grid-reload{
+	margin: 45% auto;
+	}
+
+.reload-btn{
+	font-size: 2.5em;
+	height: 50px;
+ }
+ 
+ .mytag {
+ 	margin: 10px 0 0 10px;
+ }
+
+ .add_new{
+ 	font-size : 1.8em;
+ }
+
+ ion-item {
+ 	border-bottom:0px;
+ }
+
+.list-header-md{
+	border-top:0px;
+}
+
+.toolbar-title {
+  text-align:center;
+}
+
+.large{
+	font-size:1.6em;
+}
+
+.custom-bagde-footer {    
+	width: 16px;
+	height: 16px;
+	padding: 3px 3px;
+	font-size: 8px;
+	top: 2%;
+	right: 30%;
+	position: absolute;
+	border-radius: 16px;
+}
+
+.segment .segment-button{
+	opacity:1 !important;
+	background: white;
+}
+
+}
+
+

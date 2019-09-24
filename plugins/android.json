@@ -1,0 +1,118 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "call-number": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "com-darryncampbell-cordova-plugin-intent": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "com-sarriaroman-photoviewer": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-calendar": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-console": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-email-composer": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-fcm": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-filechooser": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-filepath": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-filepicker": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-fingerprint-aio": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-ionic": {
+      "APP_ID": "fc847335",
+      "CHANNEL_NAME": "Master",
+      "UPDATE_API": "https://api.ionicjs.com",
+      "UPDATE_METHOD": "background",
+      "MAX_STORE": "2",
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "ionic-plugin-deeplinks": {
+      "URL_SCHEME": "velvetfm",
+      "DEEPLINK_SCHEME": "https",
+      "DEEPLINK_HOST": "velvet-ip.eu",
+      "ANDROID_PATH_PREFIX": "/",
+      "ANDROID_2_PATH_PREFIX": "/",
+      "ANDROID_3_PATH_PREFIX": "/",
+      "ANDROID_4_PATH_PREFIX": "/",
+      "ANDROID_5_PATH_PREFIX": "/",
+      "DEEPLINK_2_SCHEME": " ",
+      "DEEPLINK_2_HOST": " ",
+      "DEEPLINK_3_SCHEME": " ",
+      "DEEPLINK_3_HOST": " ",
+      "DEEPLINK_4_SCHEME": " ",
+      "DEEPLINK_4_HOST": " ",
+      "DEEPLINK_5_SCHEME": " ",
+      "DEEPLINK_5_HOST": " ",
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.velvet.fm"
+    }
+  }
+}

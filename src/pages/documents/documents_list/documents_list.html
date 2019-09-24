@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button (click)="back()" icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+    <ion-title>
+      List Of Documents
+    </ion-title>
+
+    <ion-buttons right>
+      <button ion-button  icon-only (click)="shared()" > <ion-icon name="md-share"></ion-icon> </button>
+      <button ion-button  icon-only  [navPush] = "documentConditions" [navParams]="params"> 
+          <ion-icon ios="ios-options" md="md-options" item-end color="red">
+            <ion-badge class="custom-bagde" *ngIf="conditions?.length > 0 && conditions[0].value !== ''" color="danger">{{conditions?.length}}</ion-badge>
+            </ion-icon>
+          </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+   <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)">
+   </ion-searchbar>
+</ion-header>
+
+<ion-content >
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list *ngIf="!reload && !is_searched">
+     
+      <ion-item *ngFor="let d of documents; let i = index" class="item item-block item-ios {{d.opened ? 'opened' : 'not-opened'}}">
+        
+        <div tappable (click)='view(page.view,d.id,i,d.org_id);'>
+          <h2>{{d.designation}}</h2>
+          <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+        </div>
+        <button class="more-btn" ion-button (click)='presentActionSheet(d.id,i);' item-end clear> <ion-icon name="md-more" ></ion-icon></button>
+      </ion-item> 
+
+    </ion-list>
+
+    <ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid class="grid-reload" *ngIf="!is_searched && !reload && documents?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+          <p>No Record Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  <ion-infinite-scroll *ngIf="have_more"  (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+  <div class="search-spinner" *ngIf="is_searched">
+    <ion-spinner ></ion-spinner>
+  </div> 
+
+  
+</ion-content>
+
+<ion-footer>
+  <ion-fab right bottom *ngIf="!reload">
+    <button class="add-btn" ion-fab (click)="create()" >
+        <ion-icon class="add-icon" name="add"  ></ion-icon>
+    </button>
+  </ion-fab>
+</ion-footer>

@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			Choose location
+		</ion-title>
+		<ion-buttons start>
+		    <button ion-button (click)="dismiss()">
+		        <span ion-text color="primary" showWhen="ios,android">Cancel</span>
+		    </button>
+	    </ion-buttons>
+	    <ion-buttons right >
+	    	<button ion-button (click)="create()" clear>Save</button>
+	    </ion-buttons>
+	 </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list radio-group>
+
+		<ion-item *ngFor = "let level of levels;" >
+	    	<ion-label>{{level.name}}</ion-label>
+	    	<ion-radio [value]="level.id" (ionSelect)="setLocation(level)"></ion-radio>
+	  	</ion-item>
+
+	  	<ion-item>
+	    	<ion-label class='add-new-location' (click) = "showModal()" >
+    			<ion-icon color='primary' name="add-circle" ></ion-icon> 
+    			<span>Add new</span> 
+    		</ion-label>
+	  	</ion-item>
+	</ion-list>
+</ion-content>

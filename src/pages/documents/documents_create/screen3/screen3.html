@@ -1,0 +1,76 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Select Files
+    </ion-title>
+     <ion-buttons right>
+      <button ion-button (click)="presentActionSheet()" clear><ion-icon ios="ios-log-in" md="md-log-in" style="font-size:1.8em"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-list>
+		<div *ngIf="count(categories_attrs) > 0">
+			
+			<ion-list-header class="item item-ios list-header list-header-ios" style="color:#488aff;border-top:0">
+			Category
+			</ion-list-header>
+			
+			<div *ngFor="let ca of categories_attrs">
+
+				<ion-item *ngIf=" ca.attr_type == 'image' ">
+					<ion-label>{{ca.name}}</ion-label>
+					<ion-select multiple="true" [(ngModel)]="category_files_data[ca.id]" (ionChange)="selectFile(ca.id,'c')" style="margin: 11px 8px 11px 0;">
+						<ion-option *ngFor="let f of select_files[ca.id+'_c']; let i = index" value="{{i}}"  [disabled]="f.is_disabled" >{{getName(f.path)}}</ion-option>
+					</ion-select>
+				</ion-item>
+
+				<ion-item *ngIf=" ca.attr_type == 'file' ">
+					<ion-label>{{ca.name}}</ion-label>
+					<ion-select multiple="true" [(ngModel)]="category_files_data[ca.id]" (ionChange)="selectFile(ca.id,'c')" style="margin: 11px 8px 11px 0;">
+						<ion-option *ngFor="let f of select_files[ca.id+'_c']; let i = index" value="{{i}}"  [disabled]="f.is_disabled" >{{getName(f.path)}}</ion-option>
+					</ion-select>
+				</ion-item>
+			</div>
+		</div>
+
+		<div *ngIf="count(sub_categories_attrs,['file','image']) > 0">
+			
+			<ion-list-header class="item item-ios list-header list-header-ios" style="color:#488aff;border-top:0">
+			Sub Category
+			</ion-list-header>
+			
+			<div *ngFor="let sa of sub_categories_attrs">
+				
+				<ion-item *ngIf=" sa.attr_type == 'image' ">
+					<ion-label>{{ca.name}}</ion-label>
+					<ion-select multiple="true" [(ngModel)]="subcategory_files_data[sa.id]" (ionChange)="selectFile(sa.id,'s')" style="margin: 11px 8px 11px 0;">
+						<ion-option *ngFor="let f of select_files[sa.id+'_s']; let i = index" value="{{i}}" [disabled]="f.is_disabled" >{{getName(f.path)}}</ion-option>
+					</ion-select>
+				</ion-item>
+
+				<ion-item *ngIf=" sa.attr_type == 'file' ">
+					<ion-label>{{sa.name}}</ion-label>
+					<ion-select multiple="true" [(ngModel)]="subcategory_files_data[sa.id]" (ionChange)="selectFile(sa.id,'s')" style="margin: 11px 8px 11px 0;">
+						<ion-option *ngFor="let f of select_files[sa.id+'_s']; let i = index" value="{{i}}" [disabled]="f.is_disabled" >{{getName(f.path)}}</ion-option>
+					</ion-select>
+				</ion-item>
+
+			</div>
+
+		</div>
+
+	</ion-list>
+</ion-content>

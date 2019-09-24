@@ -1,0 +1,285 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+.sidenav {
+  .sidemenu {
+    overflow: hidden;
+    display: block;
+    height: 0;
+    transition: height .3s linear;
+    &.visible {
+        height: 150px;
+        margin-left: 15px;
+    }
+  }
+}
+
+.list-ios .item-block .item-inner {
+     border-bottom: 0
+}
+
+.object-fit {
+  object-fit: cover;
+}
+
+.profile-pic{
+    text-align: center;
+    position: relative;
+    border-radius: 100%;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    margin: 30px auto;
+}
+
+.profile-div {
+  position: relative;
+  max-width: 200px;
+    margin: 0 auto;
+}
+
+.profile-div ion-icon {
+      position: absolute;
+    bottom: 2px;
+    right: 8%;
+    background-color: #488aff;
+    color: #fff;
+    font-size: 25px;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.custom-bagde {    
+  width: 16px;
+  height: 16px;
+  padding: 1px 4px;
+  font-size: 13px;
+  top: -3px;
+  right: -2px;
+  border-radius: 100%;
+  background-color: rgba(245, 61, 61, 0.9019607843137255);
+  position: absolute;
+}
+
+.dashboard-profile-button {
+  background : rgba(200, 214, 250, 0.3);
+  border-bottom : 1px solid #c0bcbc;
+}
+
+.error-toaster .toast-wrapper.toast-bottom {
+    background: rgba(183, 11, 11, 0.8);
+}
+
+.connection-timeout {
+  font-size:3.2em;
+  color:gray;
+}
+
+.mb-10{
+  margin-bottom: 10px;
+}
+
+.pd-bt-10{
+  padding-bottom: 10px;
+}
+
+.wd-30{
+  width: 30px;
+}
+
+.more-icon {
+  width:30px;
+}
+  
+.myBarBtn {
+  display: block !important;
+  margin:0px;
+}
+
+.profile-img {
+  object-fit: cover;
+  &.dashboard {
+    width:80px;
+    height:80px;
+  }
+}
+
+//No Record
+
+.grid-reload{
+  margin: 45% auto;
+}
+
+.no-record-icon {
+  font-size:3.2em;
+  color:gray;
+}
+
+
+//Icons
+
+ion-icon {
+  
+  &.dashboard {
+    color: #2e2323;
+  }
+
+  &.search {
+    color: #4CAF50;
+  }
+
+  &.infrastructure {
+    color: #9E9E9E;
+  }
+
+  &.equipment {
+    color: #795548;
+  }
+  
+  &.contact_internal {
+    color: #ff9800;
+  }
+
+  &.contact_external {
+    color: #2196F3;
+  }
+
+  &.document {
+    color: #009688;
+  }
+
+  &.agenda {
+    color: #607D8B;
+  }
+
+  &.settings {
+    color: #4d5053;
+  }
+
+  &.logout {
+    color: #f53d3d;
+  }
+
+
+}
+
+.add-btn {
+  width:50px;
+  height:50px;
+  
+  .add-icon {
+    font-size: 3.4rem;
+  }
+}
+
+.more-btn {
+  width:30px;
+  font-size: 1.3rem !important;
+  
+  ion-icon {
+    font-size: 1.7em;
+  }
+}
+
+.searchbar-md {
+   padding: 0px; 
+}
+
+.segment-pad {
+   padding: 5px 0 5px 0;
+}
+
+div.search-spinner {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  height: 100px;
+  width: 100px;
+  text-align: center;
+
+  ion-search-spinner{
+    width: 150px;
+    height: 150px;
+  }
+  
+}
+
+ion-spinner * {
+  stroke: #488aff !important;
+}
+
+.unread {
+  background-color:rgba(224, 230, 240, 0.75);
+}
+
+.screen-header {
+  color:#488aff !important;
+  border-top:0px !important;
+}
+
+.construct-edit-btn{
+  width:50px;
+  height:50px;
+  .construct-icon {
+    font-size: 2.4rem;
+  }
+}
+
+.cancel-edit-btn{
+  width:50px;
+  height:50px;
+  background-color: rgba(225, 56, 56, 0.82);
+  .cancel-icon {
+    font-size: 3.4rem;
+  }
+}
+
+.rg-70 {
+  right:70px !important;
+}
+
+
+.custom-ion-fab{
+  bottom: 45px !important;
+}
+
+.tag-item{
+  margin-bottom: 40px;
+}
+
+.searchbar-ios{
+  padding:0 8px !important;
+}
+
+.item-margin {
+    max-width: 100%;
+    width: 100%;
+    padding:0px 5px 0 0;
+}
+
+.add-new-location {
+  span {
+    line-height: 2;
+  }
+}
+
+.success .toast-wrapper {
+  background: #49a553;
+}

@@ -1,0 +1,64 @@
+page-agenda {
+
+
+  ion-chip {
+   margin: 10px !important;
+  }
+
+  .item-margin {
+      max-width: 100%;
+      width: 100%;
+      padding:0px 5px 0 0;
+      margin: 18px 8px 18px 0;
+  }
+
+  .days {
+    display: inline-block;
+    .button {
+      height: 28.5px;
+      width: 28.5px;
+      border-radius: 50%;
+    }
+  }
+
+  .recurrence {
+    margin: 15px;
+    border: 1px solid #f0f0f0;
+
+    .text-input-md {
+        margin: 5px 8px 11px 0;
+        padding: 0;
+        width: calc(100% - 8px);
+    }
+  }
+
+  .recurrence-label {
+    font-size: 13px;
+    font-weight: 450;
+  } 
+
+  ion-calendar {
+   background: rgba(223, 222, 222, 0) !important;
+   padding: 0px;
+   //height: 150px;
+  } 
+
+  ion-row{
+      padding:0px;
+      //padding: 0px 20px 0px 20px;
+
+    ion-col {
+      font-size:14px;
+      padding:0px !important;
+    }
+  }
+
+  .calendar-item{
+    background: rgba(223, 222, 222, 0.2784313725490196) !important;
+  }
+
+  .text-input-md {
+    margin: 0px;
+  }
+
+}

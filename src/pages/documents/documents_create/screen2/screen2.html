@@ -1,0 +1,96 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Input Attributes
+    </ion-title>
+     <ion-buttons right>
+      <button ion-button (click)="next()" clear>Next</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+		<div>
+			<ion-list-header class="item item-ios list-header list-header-ios screen-header" >
+			Infos
+			</ion-list-header>
+			<div>
+				<ion-item>
+					<input class="text-input text-input-ios" type="text" [(ngModel)]="designation" name="designation" required placeholder="Designation *"/>
+				</ion-item>
+			</div>
+		</div>
+		
+		<div *ngIf="categories_attrs?.length > 0">
+			
+			<ion-list-header class="item item-ios list-header list-header-ios screen-header">
+				Category
+			</ion-list-header>
+			<div *ngFor="let ca of categories_attrs">
+				
+				<ion-item *ngIf=" ca.attr_type == 'text' || ca.attr_type == 'number' ">
+					<input class="text-input text-input-ios" type="{{ca.attr_type}}" [(ngModel)]="category_data[ca.id]" name="{{ca.name}}" required placeholder="{{ca.name}}"/>
+				</ion-item>
+
+				<ion-item *ngIf=" ca.attr_type == 'date' " class="item-margin" >
+					<ion-datetime displayFormat="DD/MM/YYYY" style="padding:0;" [(ngModel)]="category_data[ca.id]"  pickerFormat="DD MMM YYYY" placeholder="{{ca.name}}" ></ion-datetime>
+				</ion-item>
+
+				<ion-item *ngIf=" ca.attr_type == 'list' ">
+					<ion-label>{{ca.name}}</ion-label>
+					<ion-select [(ngModel)]="category_data[ca.id]" class="item-margin">
+						<ion-option *ngFor="let op of ca.options" value="{{op}}" >{{op}}</ion-option>
+					</ion-select>
+				</ion-item>
+
+			</div>
+		</div>
+		
+		<div *ngIf="sub_categories_attrs?.length > 0">
+			<ion-list-header class="item item-ios list-header list-header-ios screen-header" >
+			Sub Category
+			</ion-list-header>
+			<div *ngFor="let sa of sub_categories_attrs">
+				<ion-item *ngIf=" sa.attr_type == 'text' || sa.attr_type == 'number' ">
+						<input class="text-input text-input-ios" type="text" name="username" [(ngModel)]="subcategory_data[sa.id]" required placeholder="{{sa.name}}"/>
+				</ion-item>
+				<ion-item *ngIf=" sa.attr_type == 'date' " class="item-margin" >
+					<ion-datetime displayFormat="DD/MM/YYYY" style="padding:0" [(ngModel)]="subcategory_data[sa.id]" pickerFormat="DD MMM YYYY" placeholder="{{sa.name}}" ></ion-datetime>
+				</ion-item>
+
+				<ion-item *ngIf=" sa.attr_type == 'list' " class="item-margin" >
+					<ion-label>{{sa.name}}</ion-label>
+					<ion-select [(ngModel)]="subcategory_data[sa.id]">
+						<ion-option *ngFor="let op of sa.options" value="{{op}}" >{{op}}</ion-option>
+					</ion-select>
+				</ion-item>
+			</div>
+		</div>
+		
+		<div>
+			<ion-list-header class="item item-ios list-header list-header-ios screen-header" >
+			Tags *
+			</ion-list-header>
+
+			<ion-item>
+			  <ion-label>Select Tags</ion-label>
+			  <ion-select [(ngModel)]="tags" multiple="true">
+			    <ion-option *ngFor="let t of tags_data" value="{{t.id}}">{{t.tag_name}}</ion-option>
+			  </ion-select>
+			</ion-item>
+		</div>
+
+	</ion-list>
+</ion-content>
+ 

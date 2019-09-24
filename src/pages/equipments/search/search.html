@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Search
+    </ion-title>
+    <ion-buttons right >
+      <button ion-button (click)="searchObjects()" clear>Search</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-list-header [class]="item_header_class" [style.color]="color">
+      Attribute
+    </ion-list-header>
+
+    <ion-item>
+       <ion-select class="item-margin" [(ngModel)]="attribute" placeholder="Select Attribute">
+          <ion-option *ngFor="let attr of attributes; let i = index " [value]="i" >{{attr.name}}</ion-option>
+        </ion-select>
+    </ion-item>
+    
+
+    <span *ngIf = "attribute >= 0 " >
+      
+      <span *ngIf = " attributes[attribute].attr_type == 'text' || attributes[attribute].attr_type == 'number' ">
+        <ion-list-header [class]="item_header_class" [style.color]="color">
+          Value
+        </ion-list-header>
+
+        <ion-item  >
+          <input  [class]="input_class" 
+                  [type]="attributes[attribute].attr_type"
+                  [(ngModel)]="search.value"
+                  required
+                />
+        </ion-item>
+      </span>
+
+      <span *ngIf = " attributes[attribute].attr_type == 'date' ">
+          
+        <ion-list-header [class]="item_header_class" [style.color]="color">
+          From
+        </ion-list-header>
+
+        <ion-item>
+
+          <ion-datetime [class]="input_class" 
+                        displayFormat="DD/MM/YYYY" 
+                        [style.padding]="0"  
+                        pickerFormat="DD MMM YYYY" 
+                        [(ngModel)]="search.from" ></ion-datetime>
+        </ion-item>
+
+        <ion-list-header [class]="item_header_class" [style.color]="color">
+          To
+        </ion-list-header>
+        
+        <ion-item>
+
+          <ion-datetime [class]="input_class" 
+                        displayFormat="DD/MM/YYYY" 
+                        [style.padding]="0"  
+                        [min]="search.from"
+                        pickerFormat="DD MMM YYYY" 
+                        [(ngModel)]="search.to" ></ion-datetime>
+        </ion-item>
+      </span>
+
+      <span *ngIf = " attributes[attribute].attr_type == 'list' ">
+        <ion-list-header [class]="item_header_class" [style.color]="color">
+          Value
+        </ion-list-header>
+        <ion-item >
+          <ion-select class="item-margin" 
+                      [(ngModel)]="search.value" >
+            <ion-option *ngFor="let op of attributes[attribute].options; let i = index" [value]="i" >{{op}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </span>
+
+    </span>
+  </ion-list>
+
+  <div class="search-spinner" *ngIf="is_searched">
+    <ion-spinner ></ion-spinner>
+  </div> 
+  
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>

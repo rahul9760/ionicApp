@@ -1,0 +1,232 @@
+page-login1 {
+	.logo{
+		text-align: center;
+		margin: 20px 0 5px 0;
+		img{
+			max-height: 100px;
+		}
+	    
+	}
+
+	.more-btn {
+		position:absolute;
+		right : 0px;
+	}
+
+	.custom-button{
+    	height: 2.3em;
+    	margin: 1.4rem 0.2rem;
+	}
+
+	.mono-user{
+    	text-align: center;
+    	color: gray;
+	}
+
+	.pincode{
+        border: 1px solid #808080;
+	    border-radius: 5px;
+	    margin: 10px;
+	    font-size: 25px;
+	}
+	.pincode .text-input{
+	    margin:5px;
+	    text-align:center;
+	}
+
+	.cbutton {
+        height: auto;
+	    font-size: 1.7rem;
+	    padding: 9px 60px;
+	    margin-bottom: 12px;
+	}
+
+	.lbutton {
+        height: auto;
+	    font-size: 1.5rem;
+	    padding: 9px 47px;
+	    margin-bottom: 12px;
+	}
+
+	.pin-btn {
+		margin:0;
+    	border-top: 0px;
+	}
+
+	.user-btn {
+		margin:0;
+   		border-top: 0px;
+	}
+
+	.is-active {
+		background-color:#005dbf;
+		border-radius: 4px 4px 0px 0px;
+	}
+
+	.r-bg {
+		background-color:#f1f1f1;
+	}
+
+	.r-bg .item {
+		background-color:#f1f1f1;
+	}
+
+	.r-bg .item .item-inner {
+		border-bottom : 0px
+	}
+
+	.grid .col.user-col:last-child {
+	 margin: 0 0 0 10px;
+	}
+
+	page-login .r-bg.col {
+	 border: none;
+	}
+
+	.login .item-input ion-input input {
+	    background-color: #fff;
+	    padding: 10px;
+	    border: 1px solid #ccc;
+	    margin: 5px 0;
+	}
+
+	.action-btn {
+	    margin: 10px 0;
+	}
+
+	.change{
+		height: 1.8em;
+	}
+
+	.grid {	
+		button{
+		    border-radius: 10px;
+		    height: 1.8em;
+		}
+
+		.button-large {
+	        height: 3.0em;
+		    font-size: 2.2rem;
+		    padding: 0 1.2em;
+		    border-radius: 100px;
+		}
+
+		.row {
+			//margin:0px 40px
+			.col {
+				padding : 1px;
+			}
+		}
+
+		.cross {
+			border-color : gray;
+			color : gray;
+		}
+
+		padding: 0 10px;
+		max-width: 300px;
+	}
+
+	.pin-code{
+
+		ul {
+		    text-align: center;
+		    margin: 5px 38px 15px 0;
+			li {
+				display:inline-block;
+				ion-icon {
+					color: #488aff;
+				}
+				padding:2px;
+			}
+		}
+	}
+	
+	.avatar{
+		text-align: center;
+	    position: relative;
+	    border-radius: 100%;
+	    overflow: hidden;
+	    width: 50px;
+	    height: 50px;
+	    margin: auto;
+	}
+
+	.avatar-pic {
+		position: relative;
+		max-width: 200px;
+    	margin: 0 auto;
+	}
+
+	.name {
+		margin: 10px 0 3px 0;
+	}
+
+	@media screen and (min-height : 600px) and (max-height : 700px) {
+
+	}
+
+	@media screen and (min-height :320px) and (max-height : 480px) {
+
+	   .grid {
+		   padding: 0 20px;
+
+			.button-large {
+			    height: 2.6em;
+			    font-size: 2.2rem;
+			    padding: 0 1.0em;
+			    border-radius: 100px;
+			}
+	   }
+
+	   .pin-code ul {
+		    text-align: center;
+		    margin: 5px 38px 5px 0;
+		}
+
+		.avatar{
+		    width: 40px;
+		    height: 40px;
+		}
+
+		.logo{
+			img{
+			}
+		}
+	}
+
+	@media screen and (min-height :480px) and (max-height : 568px) {
+
+	   .grid {
+		   padding: 0 20px;
+
+			.button-large {
+			    height: 2.8em;
+			    font-size: 2.2rem;
+			    padding: 0 1.1em;
+			    border-radius: 100px;
+			}
+	   }
+
+	   .logo{
+		   	img{
+		   		max-height : 60px;
+		   	}
+	   }
+
+		.avatar{
+		    width: 25px;
+		    height: 25px;
+		}
+
+		.name {
+			display:none;
+		}
+
+
+	}
+
+	body {
+		overflow:hidden !important;
+	}
+}

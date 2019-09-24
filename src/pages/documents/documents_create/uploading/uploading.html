@@ -1,0 +1,73 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Uploading Files
+    </ion-title>
+     <ion-buttons right>
+      <!-- <button ion-button (click)="next()" clear>Next</button> -->
+      <button ion-button (click)="save()" clear>Save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+   <ion-grid class="grid-reload"  *ngIf="files?.length == 0" > 
+    <ion-row text-center>
+      <ion-col>
+        <button ion-button outline icon-start (click)="presentActionSheet()"> <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon> Upload files </button>
+        <!-- <p>OR</p>
+        <button ion-button (click)="next()" color="light" >Skip</button> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+    <ion-list-header class="my-header item item-ios list-header list-header-ios"  *ngIf="files?.length > 0" >
+      Select Files
+    </ion-list-header>
+    <ion-list *ngIf="files?.length > 0" >
+      <ion-item-sliding *ngFor="let f of files; let i = index " >
+        <ion-item>
+          <ion-thumbnail item-start>
+            <!-- <div class="profile-div"> -->
+               <!-- <div class="profile-pic" > -->
+                <img class="uploaded-img" *ngIf="f.is_captured" [src]="DomSanitizer.bypassSecurityTrustUrl(f.path)" >
+                <img class="uploaded-img" [src]="getImage(f.path)" *ngIf="!f.is_captured">
+              <!-- </div>
+            </div>
+   -->
+          </ion-thumbnail>
+          <h2> <input class="file-input" [(ngModel)]="f.user_defined_name" type="text"  > </h2>
+          <p *ngIf="f.attribute_id > 0" text-capitalize>
+            {{f.category_attribute_name}}
+            <!-- <br/> -->
+            <button class="remove-btn" ion-button clear item-end color="danger" (click)="RemoveAttributes(i)"><ion-icon name="ios-trash"></ion-icon></button>
+          </p>
+          <button class="add-btn" ion-button clear item-end (click)="assignAttributes(i)" ><ion-icon name="{{f.attribute_id > 0 ? 'md-checkbox' : 'md-square-outline' }}"></ion-icon>
+          </button>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button (click)="deleteFile(i)" color="danger">
+            <ion-icon name="ios-trash"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="files?.length > 0">
+	 <ion-fab right bottom >
+	    <button class="add-btn" ion-fab (click)="presentActionSheet()" >
+        <ion-icon name="add" style="font-size: 3.4rem;" ></ion-icon>
+      </button>
+	 </ion-fab>
+</ion-footer>

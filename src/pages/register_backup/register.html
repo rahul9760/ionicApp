@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Register
+    </ion-title>
+    <ion-buttons right>
+      <!-- <button ion-button (click)="Register()" clear>Done</button> -->
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="logo" (click)=presentActionSheet()>
+    <img src="assets/img/track_my_document.png"/>
+    <p>Click on the Image to Update Profile</p>
+  </div>
+  <div class="logo" *ngIf="image_data" (click)=presentActionSheet()>
+    <img [src]="image_data"/>
+    <p>Click on the Image to Update Profile</p>
+  </div>
+  <form [formGroup]="register_form">
+    <ion-item>
+      <ion-input type="text" formControlName="user_name" placeholder="Username*" ></ion-input>
+
+      <div *ngIf="register_form.controls.user_name.value=='' && !register_form.controls.user_name.valid && register_form.controls.user_name.dirty">
+        User Name is required.
+      </div>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-input type="{{type1}}" formControlName="password" placeholder="Password*"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button color="light" (click)="showPassword_1()"><ion-icon name="{{password_eye}}"></ion-icon></button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-input type="{{type2}}" formControlName="confirm_password" minlength="6" maxlength="10" placeholder="Confirm Password*" ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button color="light" (click)="showPassword_2()"><ion-icon name="{{confirm_password_eye}}"></ion-icon></button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item>
+      <ion-input type="text" formControlName="name" placeholder="Name*" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="email" formControlName="email" placeholder="Email*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" formControlName="contact" placeholder="Phone*" minlength="10" maxlength="13"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" formControlName="address" placeholder="Address*" minlength="10" maxlength="100"></ion-input>
+    </ion-item>
+    <ion-item class="pd-bt-10">
+      <ion-label>Country*</ion-label>
+      <ion-select formControlName="country">
+        <ion-option *ngFor="let country of countryList" value="{{country.name}}" >{{country.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" formControlName="gmail" placeholder="Google Account"></ion-input>
+    </ion-item>
+    <ion-item class="pd-bt-10" >
+      <ion-label>Language*</ion-label>
+      <ion-select formControlName="languages">
+        <ion-option *ngFor="let lg of languages" value="{{lg.id}}" >{{lg.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <button type="button" class="custom-button" ion-button block (click)="user_register(register_form)">Submit</button>
+  </form>
+</ion-content>

@@ -1,0 +1,112 @@
+<ion-content scroll="false" >
+  <!-- <button class="more-btn" clear ion-button icon-only (click)="presentPopover($event)">
+    <ion-icon name="more"></ion-icon>
+  </button> -->
+
+  <div class="logo">
+    <div *ngIf="platform.is('ios')">
+      <img src="assets/img/track_my_document.png">
+    </div>
+    <div *ngIf="platform.is('android')">
+      <img src="assets/img/track_my_document.png">
+    </div>
+    <div *ngIf="platform.is('windows')">
+      <ion-img src="assets/img/track_my_document.png"></ion-img>
+    </div>
+  </div>
+  
+  <div class="avatar">
+    <div class="avatar-pic" *ngIf="user.private_image_path">
+      <img src="{{user.private_image_path}}">
+    </div>
+  </div>
+
+  <div class="name" text-center>Hello <span text-uppercase >{{getFirstname(user.username)}}</span></div>
+
+  <div text-center >
+    <button class="change" ion-button clear (click) = "change()" text-capitalize icon-end> 
+      Change user  
+      <ion-icon name="contact"></ion-icon>
+    </button>
+  </div>
+
+  <div text-center *ngIf="fingerprint && touch_id" >
+    <button ion-button icon-only clear  (click) = "loadFingerPrint()" text-capitalize > 
+      <ion-icon name="finger-print"></ion-icon>
+    </button>
+  </div>
+
+  <div class = "pin-code">
+    <ul>
+      <li> <ion-icon [name]=" strlength('1') ? 'radio-button-on' : 'radio-button-off' " ></ion-icon></li>
+      <li> <ion-icon [name]=" strlength('2') ? 'radio-button-on' : 'radio-button-off' "></ion-icon></li>
+      <li> <ion-icon [name]=" strlength('3') ? 'radio-button-on' : 'radio-button-off' "></ion-icon></li>
+      <li> <ion-icon [name]=" strlength('4') ? 'radio-button-on' : 'radio-button-off' "></ion-icon></li>
+    </ul>
+  </div>
+ 
+  <ion-grid text-center>
+    <ion-row>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('1')" >1</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('2')">2</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('3')">3</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('4')">4</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('5')">5</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('6')">6</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('7')">7</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('8')">8</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('9')">9</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <button class="cross" ion-button outline large (click)="addPin('x')">X</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button outline large (click)="addPin('0')">0</button>
+      </ion-col>
+      <ion-col>
+           <button ion-button  outline large (click)="set_pin()"> <ion-icon name="lock" style="font-size:0.9em;"></ion-icon> </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <!--  <ion-grid>
+      <ion-row class="r-bg" style="border: 1px solid #ccc;">
+        <ion-col *ngIf="is_pincode" class="r-bg" style="padding:12px">
+           <ion-item class="r-bg" style="border: none;" text-center>
+            <p style="color:#000000">Enter your Quick Access Pin</p>
+           </ion-item>
+           <ion-item>
+             <ion-input class="pincode" id="pin" type="password" [(ngModel)]="pin" name="pin" (keyup)="updatePin($event)" ></ion-input>
+          </ion-item>
+          <div text-center>
+            <button class="cbutton" id="pin-login-btn" ion-button (click)='loginViaPin();' large >Login</button>
+          </div>
+          <button ion-button clear (click)="set_pin()">Set 4-digit PIN</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+ -->
+</ion-content>

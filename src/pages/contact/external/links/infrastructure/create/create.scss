@@ -1,0 +1,28 @@
+page-agenda {
+
+  .inline-block {
+    display: inline-block;
+  }
+
+  .search_result {
+      border: 1px solid gray;
+  }
+  
+  ion-card {
+
+  }
+
+  .pd-7 {
+    padding:0px 7px 0px 7px;
+  }
+
+  .pd-16 {
+    padding:16px 16px 0px 16px;
+  }
+
+  .list-users {
+    max-height: 200px;
+    overflow: scroll;
+  }
+
+}

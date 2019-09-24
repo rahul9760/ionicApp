@@ -1,0 +1,295 @@
+<ion-header>
+ <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Description
+    </ion-title>
+    <ion-buttons right >
+      <button *ngIf="is_edit" ion-button (click)="update()" clear>Update</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="segment-pad">
+		<ion-segment [(ngModel)]="segement">
+			<ion-segment-button value="contact">
+				CONTACT
+			</ion-segment-button>
+			<ion-segment-button value="organisation">
+				ORGANISATION
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+
+	<ion-list *ngIf="description && description.contact" >
+	 	
+	 	<div [ngSwitch]="segement">
+
+	 		<div *ngSwitchCase="'contact'">
+
+	 			<div class="profile-div">
+				    <div class="profile-pic" >
+				      <img [src]="profile_pic" (click)=openCamera()>
+				    </div>
+				    <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+				</div>
+				
+				<ion-list-header [class]="item_header_class"  [style.color]="color" >
+					Firstname
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.first_name}} 
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+			        <input [class]="input_class" type="text" 
+			        	   [(ngModel)]="description.contact.first_name" 
+			        	   name="first_name" required 
+			        	   placeholder="Firstname"/>
+			    </ion-item>
+
+				<ion-list-header [class]="item_header_class"  [style.color]="color" >
+			        Lastname
+			    </ion-list-header>
+
+			    <ion-item *ngIf="!is_edit">
+					{{description.contact.last_name}} 
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+					<input [class]="input_class" type="text" 
+					       [(ngModel)]="description.contact.last_name" 
+					       name="last_name" required 
+					       placeholder="Lastname"/>
+				</ion-item>
+
+				<ion-list-header [class]="item_header_class" [style.color]="color" >
+					Email
+					<button ion-button clear item-end no-padding (click)="email(description.contact.email)" > <ion-icon name="mail"></ion-icon></button>
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.email}}
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+					<input [class]="input_class" type="email"   
+					       [(ngModel)]="description.contact.email" 
+					       name="email" required 
+					       placeholder="Email"/>
+				</ion-item>
+
+
+				<div *ngFor="let person_attr of description.contact.attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+						{{ attrName(person_attr.id,'person') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(person_attr.id, person_attr.value)" > <ion-icon [name]="access(person_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit" >
+						{{person_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="person_attr.value" 
+							   [name]="attrName(person_attr.id,'person')" required 
+							   [placeholder]="attrName(person_attr.id,'person')"/>
+					</ion-item>
+
+				</div>
+
+
+				<div *ngFor="let contact_attr of description.contact.contact_attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+						{{ attrName(contact_attr.id,'contact') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(contact_attr.id, contact_attr.value)" > <ion-icon [name]="access(contact_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit" >
+						{{contact_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="contact_attr.value" 
+							   [name]="attrName(contact_attr.id,'contact')" required 
+							   [placeholder]="attrName(contact_attr.id,'contact')"/>
+					</ion-item>
+
+				</div>
+			</div>
+
+			<div *ngSwitchCase="'organisation'">
+
+				<ion-list-header [class]="item_header_class" [style.color]="color" >
+					Organization
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.org_name}}
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+			       
+			        <!-- <ion-select [(ngModel)]="description.contact.co_id" class="item-margin" (ionChange)="getContactDivisions(description.contact.co_id)" >
+			          <ion-option  *ngFor="let org of organisations" value="{{org.id}}"> 
+			            {{org.name}}
+			          </ion-option>
+			        </ion-select> -->
+
+			        <input [class]="input_class" type="text" 
+			        	   [(ngModel)]="description.contact.org_name" 
+			        	   name="org_name" required 
+			        	   placeholder="Organization name"/>
+			    </ion-item>
+
+				<div *ngFor="let org_attr of description.contact.org_attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+					  {{ attrName(org_attr.id,'organization') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(org_attr.id, org_attr.value)" > <ion-icon [name]="access(org_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit">
+						{{org_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="org_attr.value" 
+							   [name]="attrName(org_attr.id,'organization')" required 
+							   [placeholder]="attrName(org_attr.id,'organization')"/>
+					</ion-item>
+
+				</div>
+
+				<ion-list-header [class]="item_header_class" [style.color]="color" >
+					Division
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.division_name}}
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+			       	
+			       	<ion-select [(ngModel)]="description.contact.cd_id" class="item-margin" (ionChange)="getContactDivisionAttrs(description.contact.cd_id)" >
+			          <ion-option  *ngFor="let division of divisions" value="{{division.id}}"> 
+			            {{division.name}}
+			          </ion-option>
+			        </ion-select>
+
+			       <!--  <input [class]="input_class" type="text" 
+			        	   [(ngModel)]="description.contact.division_name" 
+			        	   name="division_name" required 
+			        	   placeholder="Division name"/> -->
+			    </ion-item>
+
+				<div *ngFor="let division_attr of description.contact.division_attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+						{{ attrName(division_attr.id,'division') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(division_attr.id, division_attr.value)" > <ion-icon [name]="access(division_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit">
+						{{division_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="division_attr.value" 
+							   [name]="attrName(division_attr.id,'division')" required 
+							   [placeholder]="attrName(division_attr.id,'division')"/>
+					</ion-item>
+
+				</div>
+			</div>
+
+		</div>
+
+	</ion-list>
+	
+	<ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+   	<ion-grid class="grid-reload" *ngIf="permission"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Permission not found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+</ion-content>
+
+
+<ion-footer>
+   
+   <ion-segment color="light" *ngIf="current_user && !current_user.is_private && description && description.contact">
+    <ion-segment-button (click) = "link('agenda')"  value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_agenda_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('document')" value="document">
+      <ion-icon name="document" class="document" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_documents_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('equipment')" value="equipment">
+      <ion-icon name="cube" class="equipment" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_equipments_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('infrastructure')" value="infrastructure">
+      <ion-icon name="grid" class="infrastructure" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_locations_count}}</ion-badge></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+   
+   <ion-segment color="light" *ngIf="current_user && current_user.is_private && description && description.contact">
+    <ion-segment-button (click) = "link('agenda')"  value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_agenda_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('document')" value="document">
+      <ion-icon name="document" class="document" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_documents_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-fab class="custom-ion-fab" right bottom *ngIf="!reload && description && description.contact">
+    <button ion-fab class="construct-edit-btn" (click)="edit()" *ngIf="!is_edit"  >
+      <ion-icon class="construct-icon" name="brush" style="" ></ion-icon>
+    </button>
+    <button ion-fab class="cancel-edit-btn" (click)="cancelEdition()" *ngIf="is_edit"  > 
+      <ion-icon class="cancel-icon" name="close"></ion-icon> 
+    </button>
+  </ion-fab>
+
+</ion-footer>

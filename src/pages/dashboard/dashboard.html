@@ -1,0 +1,225 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Dashboard
+    </ion-title>
+    <ion-buttons right>
+      <button class="my-requests" ion-button clear (click) = "openRequest()" >
+        <ion-icon name="person-add" item-end>
+          <ion-badge class="custom-bagde" *ngIf="requests_count > 0" color="danger">{{ requests_count > 99 ? '9+' : requests_count }}</ion-badge>
+        </ion-icon>
+      </button>
+      <button ion-button clear (click) = "openNotifications()" >
+        <ion-icon class="my-globe" name="globe" item-end color="red">
+          <ion-badge class="custom-bagde" *ngIf="notifications_count > 0" color="danger"> {{ notifications_count > 99 ? '99+' : notifications_count }}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="custom-content-ios" *ngIf="current_user" >
+
+    <ion-grid text-center *ngIf="!current_user.is_private">
+      <ion-row>
+        <ion-col >
+          <button ion-button icon-only outline  (click) = "openModule('infrastructure')">
+            <ion-icon name="grid" class="infrastructure"></ion-icon>
+          </button> <br/>
+          <div class="title">Infrastructure</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="document"  (click) = "openModule('document')">
+            <ion-icon name="document" class="document"></ion-icon>
+          </button><br/>
+          <div class="title">Documents</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="equipment" (click) = "openModule('equipments')">
+            <ion-icon name="cube" class="equipment"></ion-icon>
+          </button><br/>
+          <div class="title">Equipments</div>
+        </ion-col>
+        <ion-col >
+          <button ion-button icon-only outline class="contact-internal" (click) = "openModule('contact_internal')">
+            <ion-icon name="contacts" class="contact_internal" ></ion-icon>
+          </button>
+          <div class="title">Contact Int</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="contact" (click) = "openModule('contact_external')">
+            <ion-icon name="contacts" class="contact_external" ></ion-icon>
+          </button>
+          <div class="title">Contact Ext</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-only outline class="agenda" (click) = "openModule('agenda')">
+            <ion-icon name="calendar" class="agenda"></ion-icon>
+          </button><br/>
+          <div class="title">Agenda</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="search" (click) = "openModule('infrastructure')">
+            <ion-icon name="search" class="search"></ion-icon>
+          </button>
+          <div class="title">Search</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="setting" (click) = "openModule('settings')">
+            <ion-icon name="settings" class="settings"></ion-icon>
+          </button>
+          <div class="title">Settings</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="add" (click) = "openModule('create')">
+            <ion-icon name="add" class="add"></ion-icon>
+          </button>
+          <div class="title">Upload</div>
+        </ion-col>
+         <ion-col>
+         </ion-col> 
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid text-center *ngIf="current_user.is_private">
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-only outline class="document"  (click) = "openModule('document')">
+            <ion-icon name="document" class="document"></ion-icon>
+          </button><br/>
+          <div class="title">Documents</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="contact" (click) = "openModule('contact_external')">
+            <ion-icon name="contacts" class="contact_external" ></ion-icon>
+          </button>
+          <div class="title">Contact Ext</div>
+        </ion-col>
+         <ion-col>
+          <button ion-button icon-only outline class="agenda" (click) = "openModule('agenda')">
+            <ion-icon name="calendar" class="agenda"></ion-icon>
+          </button><br/>
+          <div class="title">Agenda</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="setting" (click) = "openModule('settings')">
+            <ion-icon name="settings" class="settings"></ion-icon>
+          </button>
+          <div class="title">Settings</div>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only outline class="add" (click) = "openModule('create')">
+            <ion-icon name="add" class="add"></ion-icon>
+          </button>
+          <div class="title">Upload</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-card>
+      <ion-card-header no-padding padding-left>
+        
+       <ion-item no-padding>
+         <ion-label class="notification-title">Notifications</ion-label>
+        <button ion-button clear item-right no-padding class="today" >Recent</button>
+      </ion-item>
+
+      </ion-card-header>
+     
+         <ion-card-content no-padding>
+            <ion-list *ngIf="!reload && notifications?.length > 0">
+                 <ion-item *ngFor="let notification of notifications; let i = index " 
+                      class = " item item-block item-ios {{ notification.is_read == 1 ? 'read' : 'unread' }} " 
+                      (click)='openNotification(notification,i);' >
+                    
+                      <ion-avatar item-start>
+                        <img class="profile-img" src="{{avatar(notification)}}">
+                      </ion-avatar>
+
+                      <div *ngIf="is_hold && notification.is_selected " class="sm-selected-file"> 
+                        <img class="sm-check-file" src="assets/img/check.png" />
+                      </div>
+
+                    <h2>{{notification.title}}</h2>
+                    <p>{{notification.description}}</p>
+                  </ion-item> 
+                   <ion-item *ngIf="items?.length >= 0" class="see-all-records" text-center>
+                    <button no-margin  ion-button clear (click)='openScreen("notifications")'>See all notifications</button>
+                  </ion-item>  
+            </ion-list>
+           
+            <ion-grid class="no-record-grid" *ngIf=" !reload && notifications?.length <= 0" > 
+              <ion-row text-center>
+                <ion-col>
+                  <p>No Notification Found.</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid *ngIf="reload" > 
+              <ion-row text-center>
+                <ion-col>
+                  <ion-spinner ></ion-spinner>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        </ion-card-content>
+     
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header>
+        Items
+      </ion-card-header>
+      <ion-card-content no-padding>
+            <ion-item *ngFor="let item of items; let i = index" class="item item-block item-ios {{item.opened ? 'opened' : 'not-opened'}}">
+              <div tappable (click)='openItem(item,i);'>
+                <h2>{{item.title}}</h2>
+                <p text-capitalize>{{item.designation}}</p>
+              </div>
+            </ion-item> 
+            <ion-item *ngIf="!reload && items?.length >= 0" class="see-all-records" text-center>
+              <button ion-button clear (click)='openScreen("items");' >See all items</button>
+            </ion-item> 
+
+            <ion-grid *ngIf="!reload && items?.length <= 0" > 
+              <ion-row text-center>
+                <ion-col>
+                  <p>No List Found.</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid class="no-record-grid" *ngIf="reload" > 
+              <ion-row text-center>
+                <ion-col>
+                  <ion-spinner ></ion-spinner>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        Total
+      </ion-card-header>
+      <ion-card-content >
+        <canvas #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        Document by type
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

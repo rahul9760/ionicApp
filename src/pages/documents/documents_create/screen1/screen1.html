@@ -1,0 +1,55 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Select Category
+    </ion-title>
+     <ion-buttons right>
+      <button ion-button (click)="next()" clear>Next</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	
+	<ion-list radio-group [(ngModel)]="category" *ngIf="!reload && categories?.length > 0" >
+	  <ion-list-header class="item item-ios list-header list-header-ios screen-header">
+	    Category *
+	  </ion-list-header>
+	  <ion-item *ngFor="let ct of categories">
+	    <ion-label text-capitalize>{{ct.name}}</ion-label>
+	    <ion-radio (click)="catChange(true,'', ct.name)" value="{{ct.id}}"></ion-radio>
+	  </ion-item>
+	</ion-list>
+
+	<ion-list radio-group [(ngModel)]="subcategory" *ngIf="!reload && subcategories?.length > 0">
+	  <ion-list-header class="item item-ios list-header list-header-ios screen-header">
+	    Sub Category *
+	  </ion-list-header>
+	  <ion-item *ngFor="let st of subcategories">
+	    <ion-label text-capitalize>{{userLang(st.name)}}</ion-label>
+	    <ion-radio value="{{st.id}}" (click)="catUpdate(st.category_id, userLang(st.name) )"></ion-radio>
+	  </ion-item>
+	</ion-list>
+ 	
+
+    <ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>

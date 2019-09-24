@@ -1,0 +1,30 @@
+page-notifications {
+ 
+ ion-note {
+    font-size: 9px;
+    align-self: flex-start;
+    margin: 8px 0px 0px 0;
+    position: absolute;
+    right: 2%;
+    top: -2%;
+  }
+
+ .label {
+ 	//margin: 16px 8px 11px 0;
+ }
+
+
+.sm-selected-file{
+    position: absolute;
+ 	top: 33%;
+    left: 7.5%;
+}
+
+.sm-check-file{
+    color: #488aff;
+    width:20px !important;
+    height:20px !important;
+}
+
+
+}

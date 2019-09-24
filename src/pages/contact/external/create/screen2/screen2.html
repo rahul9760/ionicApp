@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Select Division
+    </ion-title>
+
+     <ion-buttons right *ngIf="division">
+      <button ion-button (click)="next()" clear>Next</button>
+    </ion-buttons>
+    
+  </ion-navbar>
+  <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)">
+  </ion-searchbar>
+</ion-header>
+
+<ion-content> 
+	<ion-list padding radio-group [(ngModel)]="division" *ngIf="!reload && divisions?.length > 0" >
+	  <ion-list-header class="item item-ios list-header list-header-ios screen-header" >
+	    Divisions
+	  </ion-list-header>
+	  <ion-item *ngFor="let div of divisions">
+	    <ion-label text-capitalize>{{div.name}}</ion-label>
+	    <ion-radio value="{{div.id}}"></ion-radio>
+	  </ion-item>
+	</ion-list>
+</ion-content>
+
+<ion-footer>
+ <ion-fab right bottom *ngIf="!reload">
+    <button class="add-btn" ion-fab (click)="create()" ><ion-icon class="add-icon" name="add"  ></ion-icon></button>
+  </ion-fab>
+</ion-footer>

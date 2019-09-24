@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons left>
+      <button ion-button (click)="back()" icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      List of documents
+    </ion-title>
+    <ion-buttons right>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+
+  <ion-list>
+   
+    <ion-list-header>
+      Settings
+    </ion-list-header>
+
+    <ion-item (click) = "notification()">
+      <ion-icon name="ios-notifications-outline" item-start color="primary"></ion-icon>
+      <ion-label>Notifications</ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      Account Setting
+    </ion-list-header>
+
+    <ion-item (click) = "edit('password')" >
+      <ion-icon name="ios-lock-outline" item-start color="primary"></ion-icon>
+      <ion-label>Password</ion-label>
+    </ion-item>
+    <ion-item (click) = "edit('pin')">
+      <ion-icon name="ios-key-outline" item-start color="primary"></ion-icon>
+      <ion-label>Pin</ion-label>
+    </ion-item>
+    <ion-item (click) = "deactivate()">
+      <ion-icon name="ios-trash-outline" item-start color="danger"></ion-icon>
+      <ion-label>Deactivate your account</ion-label>
+    </ion-item>
+     <!-- <ion-item >
+      <ion-icon name="ios-download-outline" item-start color="primary"></ion-icon>
+      <ion-label>Downloads</ion-label>
+    </ion-item> -->
+    <ion-item>
+      <ion-icon name="finger-print" item-start ></ion-icon>
+      <ion-label>Touch ID</ion-label>
+      <ion-toggle [(ngModel)]="touch_id" (ionChange)="handleTouchToggle()" color="secondary" ></ion-toggle>
+    </ion-item>
+    <ion-item >
+      <ion-icon name="ios-alert-outline" item-start color="primary"></ion-icon>
+      <ion-label>About App</ion-label>
+    </ion-item>
+    <ion-item>
+     <ion-icon name="finger-print" item-start color="primary"></ion-icon>
+      <ion-label>Privacy Policy</ion-label>
+    </ion-item>
+    <ion-item>
+     <ion-icon name="ios-paper-outline" item-start color="primary"></ion-icon>
+      <ion-label>Terms & Conditions</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="ios-help-circle-outline" item-start color="primary"></ion-icon>
+      <ion-label>Feedback</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

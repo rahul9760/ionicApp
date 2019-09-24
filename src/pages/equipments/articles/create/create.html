@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create Article
+    </ion-title>
+    <ion-buttons right >
+      <button ion-button (click)="create()" clear>save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="attributes" >
+
+      <div *ngFor="let attr of attributes" >
+
+          <ion-list-header [class]="item_header_class" [style.color]="color" >
+            {{ attr.name }}
+          </ion-list-header>
+
+          <ion-item >
+             
+             <input [class]="input_class" 
+                    type="text"
+                    [(ngModel)]="article.attrs_data[attr.id]"
+                    required 
+                    [placeholder]="attr.name" 
+                    *ngIf=" attr.attr_type == 'text' || attr.attr_type == 'number' "
+                     />
+    
+              <ion-datetime [class]="input_class" 
+                            displayFormat="DD/MM/YYYY" 
+                            [style.padding]="0"  
+                            pickerFormat="DD MMM YYYY" 
+                            [(ngModel)]="article.attrs_data[attr.id]"
+                            [disabled]="attr.disabled" 
+                            *ngIf=" attr.attr_type == 'date' " ></ion-datetime>
+              
+              <ion-select class="item-margin" 
+                          [(ngModel)]="article.attrs_data[attr.id]"
+                          *ngIf=" attr.attr_type == 'list' " 
+                          [disabled]="attr.disabled" >
+                <ion-option *ngFor="let op of attr.options; let i = index" [value]="i" >{{op}}</ion-option>
+              </ion-select>
+
+          </ion-item>
+
+      </div>
+
+  </ion-list>
+
+</ion-content>

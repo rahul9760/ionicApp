@@ -1,0 +1,335 @@
+<ion-header> 
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+        View
+    </ion-title>
+    <ion-buttons right >
+       
+       <button ion-button (click)='goToInfo();' clear> 
+          <ion-icon class="large" name="ios-list-box-outline"></ion-icon> 
+        </button>
+       
+       <button ion-button *ngIf="!is_hold && can_update && !is_renamed"  (click)="selectFiles()" clear> 
+        Select 
+       </button>
+       
+       <button ion-button *ngIf="is_renamed" (click)="renameFiles()" clear>
+         Update 
+       </button>
+       
+       <button ion-button *ngIf="is_hold && can_update && !is_renamed" (click)='deleteDocument();' clear> 
+          <ion-icon name="ios-trash-outline" color="danger"></ion-icon> 
+       </button>
+       
+       <button ion-button *ngIf="is_hold && !selected_org_id && !is_renamed" (click)='shareDocuments();' clear> 
+          <ion-icon name="ios-share"></ion-icon> 
+       </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="!is_loading">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+ 
+ <div class="segment-pad">
+  
+  <ion-segment [(ngModel)]="view">
+    <ion-segment-button value="normal">
+     <ion-icon name="list"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="large">
+       <ion-icon name="keypad"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+</div>
+
+<div [ngSwitch]="view">
+  
+ <ion-list *ngIf="!reload">
+  <div *ngIf="catFiles?.length > 0">
+    <ion-list-header class="item item-ios list-header list-header-ios screen-header" >
+     Category Files
+    </ion-list-header>
+    
+
+    <!-- selected files in List view in nested loop -->
+
+    <div *ngSwitchCase="'normal'">
+        
+        <ion-item  class="file-item" *ngFor="let ck of catFiles;" >
+         
+          <p>{{data.scategories_attrs[ck]['name']}}</p>  
+          
+          <ion-item  *ngFor="let cfk of data.cat_files[ck]; let i = index " 
+                     (press)="pressEvent($event,ck,i, 'cat')">
+            
+            <div class="file-div">
+               
+                <button class="document-btn" ion-button clear large 
+                        (click)='openDoc(cfk, ck, i , "cat");'>
+                  
+                    <ion-thumbnail item-start>
+                      
+                      <div class="default-img">
+                        
+                        <img [src]="getExt(cfk)" >
+                        
+                        <div class="{{is_hold ? 'sm-overlay' : ''}}"></div>
+
+                        <div *ngIf="show_selected && selectedFiles['cat'][ck][i]" 
+                             class="sm-selected-file"> 
+                             <img class="sm-check-file" src="assets/img/check.png" />
+                        </div>
+
+                      </div>
+
+                    </ion-thumbnail>
+
+                  <!-- <h2 *ngIf="!canRename(cfk, i, 'cat')"> 
+                    {{cfk.user_defined_name || cfk.name }}
+                  </h2> -->
+
+                  <p *ngIf="!canRename(cfk, i, 'cat')">
+                    {{ (cfk.user_defined_name?.length>20)? (cfk.user_defined_name | slice:0:20)+'...':(cfk.user_defined_name) }}
+                  </p>
+                    
+                  <input type="text" 
+                         class="text-input text-input-ios"
+                         [(ngModel)]="rename['cat'][cfk.cat_id][i]['name']"
+                         *ngIf="canRename(cfk, i, 'cat')" /> 
+
+                </button>
+            </div>
+
+            <button ion-button (click)='presentActionSheet(cfk, cfk.cat_id , "cat", i);' 
+                    item-end clear 
+                    style="width:30px"> 
+                <ion-icon name="md-more" ></ion-icon>
+            </button>
+
+          </ion-item>
+
+      </ion-item>
+
+    </div>
+    
+    <!-- Grid selected files in nested loop -->
+
+    <div *ngSwitchCase="'large'">
+      <ion-item class="file-item" *ngFor="let ck of catFiles;" >
+          <div class="file-cat" >{{data.scategories_attrs[ck]['name']}}</div> 
+          <ion-grid>
+            <ion-row>
+              <ion-col  col-4 col-md-3 col-lg-2 col-xl-2 *ngFor="let cfk of data.cat_files[ck]; let i = index " (press)="pressEvent($event,ck,i, 'cat')" text-center> 
+
+                  <div class="file-div">
+                    <div class="image-div">
+                      <button class="document-btn" ion-button clear large (click)='openDoc(cfk, ck, i, "cat");' style=
+                      " height: auto;margin:0px" > 
+                         <img class="large-img" src="{{getExt(cfk)}}">
+                         <div class="{{is_hold ? 'overlay' : ''}}"></div>
+                          <div *ngIf="show_selected && selectedFiles['cat'][ck][i]" class="selected-file"> <img class="check-file" src="assets/img/check.png" /></div>
+                      </button> 
+                    </div>
+                    <div class="filename"> {{cfk.user_defined_name || cfk.name}} </div>
+                  </div>
+              </ion-col>
+            </ion-row> 
+          </ion-grid>
+      </ion-item>
+    </div>
+
+  </div>
+ </ion-list>
+  
+  <ion-list *ngIf="!reload">
+    
+    <div *ngIf="subFiles?.length > 0">
+      
+      <ion-list-header class="item item-ios list-header list-header-ios screen-header" > Sub Category Files </ion-list-header>
+      
+      <div *ngSwitchCase="'normal'">
+        
+        <ion-item class="file-item" *ngFor="let sk of subFiles;" >
+           
+            <p>{{data.ssub_categories_attrs[sk]['name']}}</p>  
+            
+            <ion-item  *ngFor="let sfk of data.sub_cat_files[sk]; let i = index ">
+               
+                <button class="document-btn" ion-button clear large (click)='openDoc(sfk, sk, i, "subcat");'>
+                  
+                  <ion-thumbnail item-start>
+                    <img class="thumbnail-img" src="{{getExt(sfk)}}">
+                    <div class="{{is_hold ? 'sm-overlay' : ''}}"></div>
+                    <div *ngIf="show_selected && selectedFiles['subcat'][sk][i]" class="sm-selected-file"> 
+                      <img class="sm-check-file" src="assets/img/check.png" />
+                    </div>
+                  </ion-thumbnail>
+
+                  <h2 *ngIf="!canRename(sfk, i, 'subcat')"> 
+                    {{sfk.user_defined_name || sfk.name }} 
+                  </h2>
+                    
+                  <input type="text" 
+                         class="text-input text-input-ios"
+                         [(ngModel)]="rename['subcat'][sfk.sub_cat_id][i]['name']"
+                         *ngIf="canRename(sfk, i, 'subcat')" />
+
+                </button>
+                
+                <button ion-button (click)='presentActionSheet(sfk, sfk.sub_cat_id , "subcat", i);' 
+                        item-end clear 
+                        style="width:30px"> 
+                        <ion-icon name="md-more" ></ion-icon>
+                </button>
+           
+            </ion-item>
+
+        </ion-item>
+
+      </div>
+
+      <div *ngSwitchCase="'large'">
+        <ion-item class="file-item" *ngFor="let sk of subFiles;" >
+           <div class="file-cat" >{{data.ssub_categories_attrs[sk]['name']}}</div>  
+            <ion-grid>
+              <ion-row>
+                <ion-col col-4 *ngFor="let sfk of data.sub_cat_files[sk]; let i = index " (press)="pressEvent($event, sk, i, 'subcat')" text-center> 
+                  <div class="file-div">
+                    <div class="image-div">
+                      <button class="document-btn auto-height" ion-button clear large (click)='openDoc(sfk, sk, i, "subcat");' > 
+                        <img class="large-img"  src="{{getExt(sfk)}}">
+                        <div class="{{is_hold ? 'overlay' : ''}}"></div>
+                        <div *ngIf="show_selected && selectedFiles['subcat'][sk][i]" class="selected-file"> <img class="check-file" src="assets/img/check.png" /></div>
+                      </button>
+                    </div>
+                    <div class="filename"> {{sfk.user_defined_name || sfk.name}} </div>
+                  </div>
+                </ion-col>
+              </ion-row> 
+            </ion-grid>
+        </ion-item>
+      </div>
+
+    </div>
+  </ion-list>
+</div>
+
+  
+  <div class="modal" *ngIf="is_loading">
+    <div class="loader" >
+      <div class="outer-progress">
+        <div class="inner-progress" [style.width]="loader_value">
+          
+        </div>
+        <p><b>Processing..</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="is_downloading">
+    <div class="loader" >
+      <div class="outer-progress">
+        <div class="inner-progress" [style.width]="downloaded">
+          
+        </div>
+        <p><b>Downloading..</b></p>
+      </div>
+    </div>
+  </div>
+
+    <ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning"></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="grid-reload" *ngIf=" !reload && catFiles?.length <= 0 && subFiles?.length <= 0" > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad"></ion-icon><p>
+          <p>No Record Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>
+
+
+<ion-footer>
+  
+  <ion-segment color="light" *ngIf="current_user && !current_user.is_private && document">
+    
+    <ion-segment-button (click) = "link('document')" value="document">
+      <ion-icon name="document" class="document" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_documents_count)}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button (click) = "link('contact_internal')" value="contact_internal">
+      <ion-icon name="contacts" class="contact_internal" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_contacts_internal_count)}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button (click) = "link('contact_external')" value="contact_external">
+      <ion-icon name="contacts" class="contact_external" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_contacts_external_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button (click) = "link('agenda')" value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_tasks_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button (click) = "link('equipment')" value="equipment">
+      <ion-icon name="cube" class="equipment" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_equipments_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button (click) = "link('infrastructure')" value="infrastructure">
+      <ion-icon name="grid" class="infrastructure" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_infrastructure_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <ion-segment color="light" *ngIf="current_user && current_user.is_private && document">
+
+    <ion-segment-button (click) = "link('contact_external')" value="contact_external">
+      <ion-icon name="contacts" class="contact_external" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_contacts_external_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+    
+    <ion-segment-button (click) = "link('agenda')" value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_tasks_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+
+  </ion-segment>
+
+   <ion-fab class="custom-ion-fab" right bottom >
+      <button class="add-btn" ion-fab *ngIf="can_update" (click)="uploadActionSheet()" >
+        <ion-icon class="add-icon" name="add"  ></ion-icon>
+      </button>
+   </ion-fab>
+</ion-footer>

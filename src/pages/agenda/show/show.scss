@@ -1,0 +1,54 @@
+page-agenda {
+
+  ion-chip {
+   margin: 10px !important;
+  }
+
+  .username {
+    //position:absolute;
+    //font-size: 11px;
+    //margin-left: -7%;
+  }
+
+  .text-input-ios {
+  	margin-left:0px !important;
+  }
+
+  .user-description {
+    font-size: 12px;
+    position: absolute;
+    margin-left: -1%;
+    margin-top: 1%;
+  }
+
+  .user-org {
+    font-size: 12px;
+    position: absolute;
+    margin-left: -1%;
+    margin-top: 4%;
+  }
+
+  ion-avatar{
+     img {
+        margin-left: 8%;
+     }
+  }
+
+  .custom-bagde-footer {    
+    width: 16px;
+    height: 16px;
+    padding: 3px 3px;
+    font-size: 8px;
+    top: 2%;
+    right: 30%;
+    position: absolute;
+    border-radius: 16px;
+  }
+
+  .segment .segment-button{
+    opacity:1 !important;
+    background: white;
+  }
+
+
+}

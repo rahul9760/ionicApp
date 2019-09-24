@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      STEP 2
+    </ion-title>   
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="logo">
+      <img src="assets/img/email_logo_image.png">
+  </div>
+  
+  <ion-grid>
+    <ion-row class="r-bg bd-1">
+      <ion-col *ngIf="is_pincode" class="r-bg pd-12" >
+         <ion-item class="r-bg bd-0" text-center>
+          <p class="title" >Enter your Quick Access Pin</p>
+         </ion-item>
+         <ion-item>
+           <ion-input class="pincode" id="spin" type="password" name="spin" [(ngModel)]="spin"  required (keyup)="updatePin($event,0)" placeholder="PIN"></ion-input>
+        </ion-item>
+         <ion-item>
+           <ion-input class="pincode" id="cspin" type="password" name="cspin" [(ngModel)]="cspin"  required (keyup)="updatePin($event, 1)" placeholder="CONFIRM PIN" ></ion-input>
+        </ion-item>
+        <div text-center>
+          <button class="cbutton" id="pin-set-btn" ion-button (click)='set();' large >Set</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

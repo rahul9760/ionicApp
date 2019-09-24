@@ -1,0 +1,92 @@
+page-login2 {
+	.logo{
+		text-align: center;
+		margin: 25px 0;
+		img{
+			max-height: 100px;
+		}
+	    
+	}
+
+	.custom-button{
+    	height: 2.3em;
+    	margin: 1.4rem 0.2rem;
+	}
+
+	.mono-user{
+    	text-align: center;
+    	color: gray;
+	}
+
+	.pincode{
+        border: 1px solid #808080;
+	    border-radius: 5px;
+	    margin: 10px;
+	    font-size: 25px;
+	}
+	.pincode .text-input{
+	    margin:5px;
+	    text-align:center;
+	}
+
+	.cbutton {
+        height: auto;
+	    font-size: 1.7rem;
+	    padding: 9px 60px;
+	    margin-bottom: 12px;
+	}
+
+	.lbutton {
+        height: auto;
+	    font-size: 1.5rem;
+	    padding: 9px 47px;
+	    margin-bottom: 12px;
+	}
+
+	.pin-btn {
+		margin:0;
+    	border-top: 0px;
+	}
+
+	.user-btn {
+		margin:0;
+   		border-top: 0px;
+	}
+
+	.is-active {
+		background-color:#005dbf;
+		border-radius: 4px 4px 0px 0px;
+	}
+
+	.r-bg {
+		background-color:#f1f1f1;
+	}
+
+	.r-bg .item {
+		background-color:#f1f1f1;
+	}
+
+	.r-bg .item .item-inner {
+		border-bottom : 0px
+	}
+
+	.grid .col.user-col:last-child {
+	 margin: 0 0 0 10px;
+	}
+
+	page-login .r-bg.col {
+	 border: none;
+	}
+
+	.login .item-input ion-input input {
+	    background-color: #fff;
+	    padding: 10px;
+	    border: 1px solid #ccc;
+	    margin: 5px 0;
+	}
+
+	.action-btn {
+	    margin: 10px 0;
+	}
+
+}

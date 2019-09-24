@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Recent Test Items  
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="list-avatar-page">
+   	
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+  	<ion-list>
+  		 <ion-item *ngFor="let item of items; let i = index " 
+  				  class = "item item-block item-ios" 
+  				  (press)="pressEvent($event, item, i)" >
+  	      <div tappable (click)='openItem(item,i);'>
+            <h2 class='title' >{{item.title}}</h2>
+            <p text-capitalize [class]='item.description.length > 50 && "description" '>{{item.description}}</p>
+          </div>
+          <!-- <ion-badge text-capitalize [color]="stateColor(item.state)" item-end>{{item.state}}</ion-badge> -->
+          <p item-end text-capitalize>{{stateName(item.state)}}</p>
+  	    </ion-item>
+    </ion-list>
+
+    <ion-grid class="grid-reload" *ngIf=" !reload && is_request && items?.length <= 0 " > 
+      <ion-row text-center>
+        <ion-col>
+          <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+          <p>No Item Found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+	<ion-infinite-scroll *ngIf="have_more"  (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+</ion-content>

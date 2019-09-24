@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Documents Result</ion-title>
+    <ion-buttons right>
+      <button ion-button  icon-only [navPush] = "documentConditions" [navParams]="params"> <ion-icon ios="ios-options" md="md-options" item-end color="red"><ion-badge class="custom-bagde" *ngIf="conditions?.length > 0 && conditions[0].value !== ''" color="danger">{{conditions?.length}}</ion-badge></ion-icon></button>
+      
+    </ion-buttons>
+  </ion-navbar>
+ 
+  <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)"></ion-searchbar>
+</ion-header>
+
+
+<ion-content >
+	<ion-list>
+      <ion-item  *ngFor="let d of documents; let i = index" class="item item-block item-ios {{d.opened ? 'opened' : 'not-opened'}}">
+        <h2 >{{d.designation}}</h2>
+        <p text-capitalize>{{d.cat_name}} - {{d.sub_cat_name}}</p>
+        <button ion-button small item-end outline (click)="view(page.view,d.id,i)">View</button>
+        <button ion-button small item-end outline  (click)="view(page.info,d.id,i)">Info</button>
+      </ion-item>
+
+      <ion-item *ngIf="documents?.length == 0" >
+        <p>No result found</p>
+      </ion-item>
+    
+    </ion-list>
+
+    <ion-infinite-scroll *ngIf="have_more"  (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  	</ion-infinite-scroll>
+</ion-content>
+
+<ion-footer>
+</ion-footer>

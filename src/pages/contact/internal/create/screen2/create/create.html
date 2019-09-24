@@ -1,0 +1,51 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create Department
+    </ion-title>
+
+     <ion-buttons right>
+      <button ion-button (click)="save()" clear>Save</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="data">
+    
+      <ion-list-header [class]="header_class">
+        Name
+      </ion-list-header>
+
+      <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="department.name"  required placeholder="Name"/>
+      </ion-item>
+
+      <div *ngFor="let dept of data.attributes.department">
+          
+         <ion-list-header [class]="header_class">
+          {{dept.name}}
+        </ion-list-header>
+
+        <ion-item>
+          <input [class]="input_class" type="text" [(ngModel)]="department.attributes[dept.id]" required placeholder="{{dept.name}}"/>
+        </ion-item>
+
+      </div>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+ 
+</ion-footer>

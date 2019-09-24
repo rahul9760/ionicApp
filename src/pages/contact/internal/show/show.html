@@ -1,0 +1,277 @@
+<ion-header>
+ <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Description
+    </ion-title>
+    <ion-buttons right >
+      <button *ngIf="is_edit" ion-button (click)="update()" clear>Update</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="segment-pad">
+		<ion-segment [(ngModel)]="segement">
+			<ion-segment-button value="contact">
+				EMPLOYEE
+			</ion-segment-button>
+			<ion-segment-button value="site">
+				SITE
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+
+
+	<ion-list *ngIf="description && description.contact" >
+	 	
+	 	<div [ngSwitch]="segement">
+
+	 		<div *ngSwitchCase="'contact'">
+	 			
+	 			<div class="profile-div">
+				    <div class="profile-pic" >
+				      <img [src]="profile_pic" (click)=openCamera()>
+				    </div>
+				    <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+				</div>
+
+				<ion-list-header [class]="item_header_class"  [style.color]="color" >
+					Firstname
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.first_name}} 
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+			        <input [class]="input_class" type="text" 
+			        	   [(ngModel)]="description.contact.first_name" 
+			        	   name="first_name" required 
+			        	   placeholder="Firstname"/>
+			    </ion-item>
+
+				<ion-list-header [class]="item_header_class"  [style.color]="color" >
+			        Lastname
+			    </ion-list-header>
+
+			    <ion-item *ngIf="!is_edit">
+					{{description.contact.last_name}} 
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+					<input [class]="input_class" type="text" 
+					       [(ngModel)]="description.contact.last_name" 
+					       name="last_name" required 
+					       placeholder="Lastname"/>
+				</ion-item>
+
+				<ion-list-header [class]="item_header_class" [style.color]="color" >
+					Email
+					<button ion-button clear item-end no-padding (click)="email(description.contact.email)" > <ion-icon name="mail"></ion-icon></button>
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.email}}
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+					<input [class]="input_class" type="email"   
+					       [(ngModel)]="description.contact.email" 
+					       name="email" required 
+					       placeholder="Email"/>
+				</ion-item>
+
+
+				<div *ngFor="let person_attr of description.contact.attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+						{{ attrName(person_attr.id,'person') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(person_attr.id, person_attr.value)" > <ion-icon [name]="access(person_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit" >
+						{{person_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="person_attr.value" 
+							   [name]="attrName(person_attr.id,'person')" required 
+							   [placeholder]="attrName(person_attr.id,'person')"/>
+					</ion-item>
+
+				</div>
+
+
+				<div *ngFor="let employee_attr of description.contact.employee_attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+						{{ attrName(employee_attr.id,'employee') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(employee_attr.id, employee_attr.value)" > <ion-icon [name]="access(employee_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit" >
+						{{employee_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="employee_attr.value" 
+							   [name]="attrName(employee_attr.id,'employee')" required 
+							   [placeholder]="attrName(employee_attr.id,'employee')"/>
+					</ion-item>
+
+				</div>
+			</div>
+
+			<div *ngSwitchCase="'site'">
+
+				<ion-list-header [class]="item_header_class" [style.color]="color" >
+					Site
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.site_name}}
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+
+		        	<ion-select [(ngModel)]="description.contact.cs_id" class="item-margin" (ionChange)="getContactDepartments(description.contact.cs_id)" >
+			          <ion-option  *ngFor="let site of sites" value="{{site.id}}"> 
+			            {{site.name}}
+			          </ion-option>
+			        </ion-select>
+
+			    </ion-item>
+
+				<div *ngFor="let site_attr of description.contact.site_attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+					  {{ attrName(site_attr.id,'site') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(site_attr.id, employee_attr.value)" > <ion-icon [name]="access(site_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit">
+						{{site_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="site_attr.value" 
+							   [name]="attrName(site_attr.id,'site')" required 
+							   [placeholder]="attrName(site_attr.id,'site')"/>
+					</ion-item>
+
+				</div>
+
+				<ion-list-header [class]="item_header_class" [style.color]="color" >
+					Department
+				</ion-list-header>
+
+				<ion-item *ngIf="!is_edit">
+					{{description.contact.department_name}}
+				</ion-item>
+
+				<ion-item *ngIf="is_edit">
+			        
+			        <ion-select [(ngModel)]="description.contact.cd_id" class="item-margin" (ionChange)="getContactDepartmentAttrs(description.contact.cd_id)" >
+			          <ion-option  *ngFor="let department of departments" value="{{department.id}}"> 
+			            {{department.name}}
+			          </ion-option>
+			        </ion-select>
+
+			    </ion-item>
+
+				<div *ngFor="let department_attr of description.contact.department_attrs_data" >
+
+					<ion-list-header [class]="item_header_class" [style.color]="color" >
+						{{ attrName(department_attr.id,'department') }}
+						<button ion-button clear item-end no-padding (click)="accessAction(department_attr.id, employee_attr.value)" > <ion-icon [name]="access(department_attr.id)"></ion-icon></button>
+					</ion-list-header>
+
+					<ion-item *ngIf="!is_edit">
+						{{department_attr.value}}
+					</ion-item>
+
+					<ion-item *ngIf="is_edit" >
+						<input [class]="input_class" type="text" 
+							   [(ngModel)]="department_attr.value" 
+							   [name]="attrName(department_attr.id,'department')" required 
+							   [placeholder]="attrName(department_attr.id,'department')"/>
+					</ion-item>
+
+				</div>
+			</div>
+
+		</div>
+
+	</ion-list>
+
+   	<ion-grid class="grid-reload" *ngIf="reload"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Connection Timeout.</p>
+          <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+   	<ion-grid class="grid-reload" *ngIf="permission"> 
+      <ion-row text-center>
+        <ion-col> 
+          <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+          <p>Permission not found.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+</ion-content>
+
+
+
+<ion-footer>
+   
+   <ion-segment color="light" *ngIf="description && description.contact">
+
+    <ion-segment-button (click) = "link('agenda')"  value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_agenda_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('document')" value="document">
+      <ion-icon name="document" class="document" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_documents_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('equipment')" value="equipment">
+      <ion-icon name="cube" class="equipment" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_equipments_count}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('infrastructure')" value="infrastructure">
+      <ion-icon name="grid" class="infrastructure" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{description.contact.linked_locations_count}}</ion-badge></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-fab class="custom-ion-fab" right bottom *ngIf="!reload && description && description.contact">
+    <button ion-fab class="construct-edit-btn" (click)="edit()" *ngIf="!is_edit"  >
+      <ion-icon class="construct-icon" name="brush" style="" ></ion-icon>
+    </button>
+    <button ion-fab class="cancel-edit-btn" (click)="cancelEdition()" *ngIf="is_edit"  > 
+      <ion-icon class="cancel-icon" name="close"></ion-icon> 
+    </button>
+  </ion-fab>
+
+</ion-footer>

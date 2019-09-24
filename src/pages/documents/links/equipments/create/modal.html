@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create Article
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <!-- <ion-icon name="md-close" showWhen="android, windows"></ion-icon> -->
+      </button>
+    </ion-buttons>
+    <ion-buttons right >
+      <button ion-button (click)="create()" clear>Save</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+<ion-list>
+  
+
+  <ion-list-header class="item_header_class" >
+      Level 1 
+  </ion-list-header>
+
+  <ion-item>
+    <ion-label>Level 1</ion-label>
+    <ion-select [(ngModel)]="level.one" (ionChange)="changeLevel(1,level.one)">
+      <ion-option *ngFor="let level of levels.one" [value]="level.id">{{level.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list-header class="item_header_class" *ngIf = "levels.two.length" >
+      Level 2
+  </ion-list-header>
+  
+  <ion-item *ngIf = "levels.two.length" >
+    <ion-label>Level 2</ion-label>
+    <ion-select [(ngModel)]="level.two" (ionChange)="changeLevel(2,level.two)">
+        <ion-option *ngFor="let level of levels.two" [value]="level.id">{{level.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
+
+  <ion-list-header class="item_header_class" *ngIf = "levels.three.length" >
+      Level 3
+  </ion-list-header>
+
+  <ion-item *ngIf = "levels.three.length" >
+    <ion-label>Level 3</ion-label>
+    <ion-select [(ngModel)]="level.three" (ionChange)="changeModal()">
+      <ion-option *ngFor="let level of levels.three" [value]="level.id">{{level.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list-header class="item_header_class" *ngIf = "models.length" >
+      Modal
+  </ion-list-header>
+    
+  <ion-item *ngIf = "models.length" >
+    <ion-label>Model</ion-label>
+    <ion-select [(ngModel)]="levels.model" (ionChange)="getArticles()">
+      <ion-option *ngFor="let model of models" [value]="model.id">{{model.attrs_data[attributes[0]['id']]}}</ion-option>
+    </ion-select>
+  </ion-item> 
+
+  <div *ngFor="let attr of article_attributes" >
+
+      <ion-list-header [class]="item_header_class" [style.color]="color" >
+        {{ attr.name }}
+      </ion-list-header>
+
+      <ion-item >
+         
+         <input [class]="input_class" 
+                type="text"
+                [(ngModel)]="article.attrs_data[attr.id]"
+                required 
+                [placeholder]="attr.name" 
+                *ngIf=" attr.attr_type == 'text' || attr.attr_type == 'number' "
+                 />
+
+          <ion-datetime [class]="input_class" 
+                        displayFormat="DD/MM/YYYY" 
+                        [style.padding]="0"  
+                        pickerFormat="DD MMM YYYY" 
+                        [(ngModel)]="article.attrs_data[attr.id]"
+                        [disabled]="attr.disabled" 
+                        *ngIf=" attr.attr_type == 'date' " ></ion-datetime>
+          
+          <ion-select class="item-margin" 
+                      [(ngModel)]="article.attrs_data[attr.id]"
+                      *ngIf=" attr.attr_type == 'list' " 
+                      [disabled]="attr.disabled" >
+            <ion-option *ngFor="let op of attr.options; let i = index" [value]="i" >{{op}}</ion-option>
+          </ion-select>
+
+      </ion-item>
+
+  </div>
+
+</ion-list>
+
+
+</ion-content>

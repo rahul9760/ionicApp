@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Articles
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+      <ion-list *ngIf="models" >
+
+        <ion-item *ngFor="let model of models">
+          <div  (click)='view(model);' >
+            <h2>{{getTitle(model.attrs_data)}}</h2>
+          </div>
+          <button class="more-btn" ion-button (click)='presentActionSheet(model);' item-end clear> <ion-icon name="md-more" ></ion-icon></button>
+        </ion-item>
+
+      </ion-list>
+    
+  </ion-list>
+
+  <div class="search-spinner" *ngIf="is_searched">
+    <ion-spinner ></ion-spinner>
+  </div> 
+  
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>

@@ -1,0 +1,152 @@
+
+page-shared-documents {
+
+	.item {
+	    //padding-left: 10px;
+		
+	}
+
+	.list-header {
+		margin-bottom: 0px !important;
+	}
+
+	.item.item-block .item-inner {
+	    padding-right: 0px;
+	    border-bottom: 1px solid #dedede;
+	}
+
+	.list-md .item-block .item-inner {
+	    border-bottom: 0px;
+	}
+
+
+  .grid-reload{
+    margin: 45% auto;
+  }
+
+  .reload-btn{
+    font-size: 2.5em;
+    height: 50px;
+  }
+
+
+	.my-avatar {
+		margin: 4px !important;
+	}
+
+
+	.my-img {
+		width: 20px !important;
+		height: 20px !important;
+	}
+ 
+ 	.item ion-avatar {
+	    min-width: 20px;
+	    min-height: 20px;
+	}
+
+	.select-org{
+		position: absolute;
+	    top: 43%;
+	    right: 0;
+	} 
+
+	.searchbar-md {
+	 padding: 0px; 
+	}
+
+	.segment-pad {
+	 padding: 5px 0 5px 0;
+	}
+
+	div.search-spinner {
+	  margin: auto;
+	  position: absolute;
+	  top: 0; left: 0; bottom: 0; right: 0;
+	  height: 85px;
+      width: 38px;
+	  text-align: center;
+
+	  ion-spinner{
+	  	width: 150px;
+    	height: 150px;
+	  }
+	}
+
+	.search-spinner svg {
+	  width: 19% !important;
+	  height: 85px !important;
+	}
+
+
+	.mt-90 {
+		margin-top:47px;
+	}
+
+	.toast-wrapper {
+		background : red;
+	}
+	
+	.ion-md-more{
+		font-size:1.7em;
+	}
+
+	.segment .segment-button.segment-activated {
+	    opacity: 1;
+	    background: #488aff;
+	    color: white;
+	    border: 0;
+	}
+
+	.company-bannner {
+	    font-size: 1.1em;
+	    padding: 14px 16px;
+	    background: #e4e4e4;
+	    color: #131212;
+	    font-weight: 400;
+    	margin: 5px 0px 0 0;
+
+		.company-icon {
+			position:absolute;
+		}
+
+		.company-title {
+			//margin-left:20px;
+		}
+	}
+
+	.my-icn {
+		font-size:1.8em;
+	}
+
+	.my-list-header {
+		border-left: 1px solid #48d21f;
+	    padding-left: 8px;
+	}
+
+	.my-ion-segment-button{
+		color: white !important;
+	    height: 3.0em !important;
+	    line-height: 2.9em !important;
+	    font-size: 1.0em !important;
+	    text-align: left;
+	    padding: 0 10px;
+
+		.company-title {
+		    font-size: 1.1em;
+		}
+	}
+
+	.my-ion-segment{
+		background:#427feb;
+	}
+
+
+	.toolbar-title {
+	  text-align:center;
+	}
+
+	
+}
+
+

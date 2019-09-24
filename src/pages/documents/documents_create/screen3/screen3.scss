@@ -1,0 +1,69 @@
+
+page-create-screen3 {
+	
+	
+	.list-ios .item-block .item-inner {
+	    border-bottom: .55px solid #c8c7cc;
+	}
+
+	.item-ios {
+	    padding-left: 16px;
+	    border-radius: 0;
+	    position: relative;
+	    font-size: 1.6rem;
+	    color: #000;
+	    background-color: #fff;
+	    -webkit-transition: background-color .2s linear;
+	    transition: background-color .2s linear;
+	}
+
+	.item-ios .radio-ios {
+	    position: static;
+	    display: block;
+	    margin: 8px 12px 8px 8px;
+	}
+	.custom-button{
+    	height: 1.8em;
+    	margin: 1.4rem 0.2rem;
+	}
+
+	.item-ios .item-button {
+	    padding: 0 0.5em;
+	    height: 150px;
+	    width: 150px;
+	    font-size: 1.7rem;
+	    margin: 0 auto;
+	    display: block;
+        border-radius: 75px;
+	}
+
+	.item-md .item-button {
+	    padding: 0 0.5em;
+	    height: 150px;
+	    width: 150px;
+	    font-size: 1.7rem;
+	    margin: 0 auto;
+	    display: block;
+        margin-top: 50%;
+        border-radius: 75px;
+	}
+
+	.item-md {
+	    padding-left: 16px;
+	    border-radius: 0;
+	    position: relative;
+	    font-size: 1.6rem;
+	    color: #000;
+	    background-color: #fff;
+	    -webkit-transition: background-color .2s linear;
+	    transition: background-color .2s linear;
+	}
+
+	.toolbar-title {
+	  text-align:center;
+	}
+	
+
+}
+
+

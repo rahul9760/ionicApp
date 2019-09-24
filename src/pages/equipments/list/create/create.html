@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create Level
+    </ion-title>
+    <ion-buttons right >
+      <button ion-button (click)="create()" clear>save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  
+  <ion-list>
+    
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Name
+    </ion-list-header>
+    
+    <ion-item>
+        <input [class]="input_class" type="text" [(ngModel)]="level.name" name="level_name" required placeholder="Level Name"/>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

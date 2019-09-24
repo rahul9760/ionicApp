@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Create Link
+    </ion-title>
+    <ion-buttons right >
+      <button ion-button (click)="save()" clear>Save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Search documents
+      <button class="add-person" ion-button clear item-end  (click)="addDocument()" > 
+        <ion-icon name="add-circle" class="add_new"></ion-icon> 
+      </button>
+    </ion-list-header>
+
+    <ion-searchbar class="pd-16" [(ngModel)]="search" (ionInput)="getItems($event)">
+    </ion-searchbar>
+
+    <div class="pd-7">
+      <ion-card>
+
+        <ion-card-content no-padding>
+          <ion-list class="list-users" no-padding radio-group>
+
+            <ion-item *ngIf="!is_searched && documents?.length <= 0" color="light" text-center >
+               No Record Found
+            </ion-item>
+            
+            <div *ngIf="!is_searched">
+              <ion-item *ngFor="let document of documents">
+                 <ion-label>{{document.designation}}</ion-label>
+                 <ion-radio (click)="initDocument(document)" item-end></ion-radio>
+              </ion-item>
+            </div>
+
+            <ion-item *ngIf="is_searched" text-center>
+              <ion-spinner ></ion-spinner>
+            </ion-item>
+          </ion-list>
+           
+        </ion-card-content>
+
+      </ion-card>
+  </div>
+    
+
+
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Document
+    </ion-list-header>
+
+    <ion-item>
+       {{link.name}}
+    </ion-item>
+
+    <ion-list-header [class]="item_header_class" [style.color]="color" >
+      Relation Type
+    </ion-list-header>
+
+    <ion-item>
+       <ion-select [(ngModel)]="link.relation_type" class="item-margin">
+        <ion-option value="sender" > Sender </ion-option>
+        <ion-option value="recipient" > Recipient </ion-option>
+        <ion-option value="copy" > Copy </ion-option>
+        <ion-option value="concerned" > Concerned </ion-option>
+       </ion-select>
+    </ion-item>
+
+  </ion-list>
+  
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>

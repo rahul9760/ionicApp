@@ -1,0 +1,165 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Register
+    </ion-title>
+    <ion-buttons right>
+      <!-- <button ion-button (click)="Register()" clear>Done</button> -->
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="logo" (click)=presentActionSheet() *ngIf="!image_data">
+    <img src="assets/img/track_my_document.png"/>
+    <p>Click on the Image to Update Profile</p>
+  </div>
+  <div class="logo" *ngIf="image_data"> <!-- *ngIf="image_data" -->
+    <img [src]="image_data"/> <!-- [src]="image_data" -->
+    <ion-icon (click)="remove_image()" name="close-circle" class="img_close"></ion-icon>
+    <p>{{image_data}}</p>
+  </div>
+  <form [formGroup]="register_form">
+    <ion-item>
+      <ion-input type="text" formControlName="user_name" placeholder="Username*" ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.user_name.value=='' && !register_form.controls.user_name.valid && register_form.controls.user_name.dirty" class="form_err" no-lines>
+      User Name is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.user_name.errors?.pattern" class="form_err" no-lines>
+      User Name is invalid, no spaces allowed.
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 class="coll-12-cstm">
+          <ion-item class="padd_left">
+            <ion-input type="{{type1}}" formControlName="password" placeholder="Password*"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-1 class="coll-1-cstm">
+          <button ion-button color="light" (click)="showPassword_1()" class="eye_button"><ion-icon name="{{password_eye}}"></ion-icon></button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item *ngIf="register_form.controls.password.value=='' && !register_form.controls.password.valid && register_form.controls.password.dirty" class="form_err" no-lines>
+      Password is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['password'].hasError('minlength')" class="form_err" no-lines>
+      Password must be atleast 6 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['password'].hasError('maxlength')" class="form_err" no-lines>
+      Password can not exceed more then 10 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.password.errors?.pattern" class="form_err">
+      Password is invalid, no spaces allowed.
+    </ion-item>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 class="coll-12-cstm">
+          <ion-item class="padd_left">
+            <ion-input type="{{type2}}" formControlName="confirm_password" minlength="6" maxlength="10" placeholder="Confirm Password*" ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-1 class="coll-1-cstm">
+          <button class="eye_button" ion-button color="light" (click)="showPassword_2()"><ion-icon name="{{confirm_password_eye}}"></ion-icon></button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item *ngIf="register_form.controls.confirm_password.value=='' && !register_form.controls.confirm_password.valid && register_form.controls.confirm_password.dirty" class="form_err" no-lines>
+      Confirm Password is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['confirm_password'].hasError('minlength')" class="form_err" no-lines>
+      Confirm Password must be atleast 6 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['confirm_password'].hasError('maxlength')" class="form_err" no-lines>
+      Confirm Password can not exceed more then 10 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.confirm_password.errors?.pattern" class="form_err" no-lines>
+      Confirm password is invalid, no spaces allowed.
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" formControlName="name" placeholder="Name*" ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.name.value=='' && !register_form.controls.name.valid && register_form.controls.name.dirty" class="form_err" no-lines>
+      Name is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.name.errors?.pattern" class="form_err" no-lines>
+      Name is invalid, only text are allowed and no spaces allowed.
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="email" formControlName="email" placeholder="Email*"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.email.value=='' && !register_form.controls.email.valid && register_form.controls.email.dirty" class="form_err" no-lines>
+      Email is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.email.errors?.pattern" class="form_err" no-lines>
+      Email is invalid, no spaces allowed and email format should be correct.
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="number" formControlName="contact" placeholder="Phone*" minlength="10" maxlength="13"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.contact.value=='' && !register_form.controls.contact.valid && register_form.controls.contact.dirty" class="form_err" no-lines>
+      Name is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['contact'].hasError('minlength')" class="form_err" no-lines>
+      Contact must be atleast 10 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['contact'].hasError('maxlength')" class="form_err" no-lines>
+      Contact can not exceed more then 13 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.contact.errors?.pattern" class="form_err" no-lines>
+      Contact is invalid, no spaces allowed.
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" formControlName="address" placeholder="Address*" minlength="5" maxlength="50"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.address.value=='' && !register_form.controls.address.valid && register_form.controls.address.dirty" class="form_err" no-lines>
+      Address is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['address'].hasError('minlength')" class="form_err" no-lines>
+      Address must be atleast 5 characters
+    </ion-item>
+    <ion-item *ngIf="register_form.controls['address'].hasError('maxlength')" class="form_err" no-lines>
+      Address can not exceed more then 50 characters
+    </ion-item>
+
+    <ion-item class="pd-bt-10">
+      <ion-label>Country*</ion-label>
+      <ion-select formControlName="country">
+        <ion-option *ngFor="let country of countryList" value="{{country.name}}" >{{country.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.country.value=='' && !register_form.controls.country.valid && register_form.controls.country.dirty" class="form_err" no-lines>
+      Country is required.
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" formControlName="gmail" placeholder="Google Account"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.gmail.value=='' && !register_form.controls.gmail.valid && register_form.controls.gmail.dirty" class="form_err" no-lines>
+      Gmail is required.
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.gmail.errors?.pattern" class="form_err" no-lines>
+      Gmail is invalid, no spaces allowed and email format should be correct.
+    </ion-item>
+
+    <ion-item class="pd-bt-10" >
+      <ion-label>Language*</ion-label>
+      <ion-select formControlName="languages">
+        <ion-option *ngFor="let lg of languages" value="{{lg.id}}" >{{lg.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.languages.value=='' && !register_form.controls.languages.valid && register_form.controls.languages.dirty" class="form_err" no-lines>
+      Languages is required.
+    </ion-item>
+
+    <button type="button" class="custom-button" ion-button block (click)="user_register(register_form)">Submit</button>
+  </form>
+</ion-content>

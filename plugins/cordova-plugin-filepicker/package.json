@@ -1,0 +1,61 @@
+{
+  "_args": [
+    [
+      "cordova-plugin-filepicker@1.1.4",
+      "/var/www/html/luckApp&web/velvetFM___/velvetFM___"
+    ]
+  ],
+  "_from": "cordova-plugin-filepicker@1.1.4",
+  "_id": "cordova-plugin-filepicker@1.1.4",
+  "_inBundle": false,
+  "_integrity": "sha1-NKp+b3VrrWkP7TQB6c82ZCH1Wuc=",
+  "_location": "/cordova-plugin-filepicker",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-filepicker@1.1.4",
+    "name": "cordova-plugin-filepicker",
+    "escapedName": "cordova-plugin-filepicker",
+    "rawSpec": "1.1.4",
+    "saveSpec": null,
+    "fetchSpec": "1.1.4"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-filepicker/-/cordova-plugin-filepicker-1.1.4.tgz",
+  "_spec": "1.1.4",
+  "_where": "/var/www/html/luckApp&web/velvetFM___/velvetFM___",
+  "author": {
+    "name": "jcesarmobile"
+  },
+  "bugs": {
+    "url": "https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-filepicker",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "description": "\n    This plugin makes possible to pick files from iCloud or other document providers\n  ",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "homepage": "https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-filepicker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin.git"
+  },
+  "version": "1.1.4"
+}

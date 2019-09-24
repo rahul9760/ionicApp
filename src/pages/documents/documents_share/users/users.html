@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar  hide-back-button="true">
+   <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Users
+    </ion-title>
+     <ion-buttons right>
+      <button ion-button (click)="share()" clear>Share</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+    <ion-list inset >
+      <ion-item *ngFor="let user of users; let i = index "  >
+        <ion-avatar item-start>
+          <img src="{{getUrl(user)}}">
+        </ion-avatar>
+        <ion-label>{{user.name}}</ion-label>
+        <ion-checkbox [(ngModel)]="selected_users[i]" item-end></ion-checkbox>
+      </ion-item>
+    </ion-list>
+</ion-content>
+

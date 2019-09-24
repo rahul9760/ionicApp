@@ -1,0 +1,55 @@
+<ion-header>
+   <ion-navbar hideBackButton>
+   <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Linked Agenda
+    </ion-title>
+  </ion-navbar>
+  <ion-searchbar [(ngModel)]="search" (ionInput)="getItems($event)">
+  </ion-searchbar>
+</ion-header>
+
+<ion-content >
+ <ion-list *ngIf="!is_searched">
+    
+    <ion-item  *ngFor="let agenda of agendas; let i = index " >
+        <div (click)='view(agenda.task_id);' >
+          <h2>{{agenda.name}}</h2>
+          <p text-capitalize>{{agenda.description}} - {{agenda.relation_type}}</p>
+        </div>
+        <button class="more-btn" ion-button (click)='presentActionSheet(agenda);' item-end clear> <ion-icon name="md-more" ></ion-icon></button>
+    </ion-item>
+    
+  </ion-list>
+ 
+  <div class="search-spinner" *ngIf="is_searched">
+    <ion-spinner ></ion-spinner>
+  </div> 
+
+  <ion-grid class="grid-reload" *ngIf="!is_searched && !reload && agendas?.length <= 0" > 
+    <ion-row text-center>
+      <ion-col>
+        <p><ion-icon class="no-record-icon" ios="ios-sad-outline" md="md-sad" ></ion-icon><p>
+        <p>No Record Found.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll *ngIf="have_more"  (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer>
+  <ion-fab right bottom >
+     <button class="add-btn" ion-fab (click)="create()" ><ion-icon class="add-icon" name="add"  ></ion-icon></button>
+  </ion-fab>
+</ion-footer>

@@ -1,0 +1,218 @@
+  <ion-header>
+  <ion-navbar hideBackButton>
+
+    <button class="myBarBtn" ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+       Info
+    </ion-title>
+     <ion-buttons right >
+      <button ion-button (click)='goToList();' clear> <ion-icon class="large" name="attach"></ion-icon> </button>
+      <button ion-button *ngIf="is_edit" (click)="update()" clear>Update</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="!reload && is_requested">
+   
+    <ion-list-header class="item item-ios list-header list-header-ios" [style.color]="color" >
+      Designation
+    </ion-list-header>
+    
+    <div *ngIf="!is_edit"> 
+      <ion-item >
+        <span text-capitalize >{{data.designation.value}}</span>
+      </ion-item>
+    </div>
+    
+    <div *ngIf="is_edit"> 
+      <ion-item >
+        <ion-input type="text" [(ngModel)]="data.designation.value" disabled="{{data.designation.disabled}}" [style.margin]="0" ></ion-input>
+      </ion-item>
+    </div>
+
+  </ion-list>
+
+  <ion-list *ngIf="!reload">
+    
+    <ion-list-header class="item item-ios list-header list-header-ios" [style.color]="primary" *ngIf="is_requested" >
+      Category - Subcategory
+    </ion-list-header>
+
+    <ion-item >
+    
+      <span text-capitalize *ngIf="is_requested">{{data.category.value}} - {{data.subcategory.value}}</span>
+
+    </ion-item>
+
+  </ion-list>
+
+   <ion-list *ngIf="!reload && data.categories?.length > 0" >
+    <ion-list-header  class="item item-ios list-header list-header-ios" [style.color]="color" *ngIf="is_requested" >
+      Category Values
+    </ion-list-header>
+    
+    <div *ngIf="!is_edit"> 
+      <ion-item  *ngFor="let ck of data.categories" >
+        <p class="mb-10" text-capitalize>{{ck.column}}</p><span>{{ck.value}}</span> 
+      </ion-item>
+    </div>
+
+    <div *ngIf="is_edit"> 
+      <ion-item *ngFor=" let ca of data.categories "  > 
+          
+          <ion-label stacked text-capitalize class="mb-10" >{{ca.column}}</ion-label>  
+
+          <ion-input  type="{{ca.type}}"  name="test" required [(ngModel)]="ca.value" disabled="{{ca.disabled}}" *ngIf=" ca.type == 'text' || ca.type == 'number' "></ion-input>
+        
+          <ion-datetime class="mb-10" displayFormat="DD/MM/YYYY" [style.padding]="0" pickerFormat="DD MMM YYYY" [(ngModel)]="ca.value" disabled="{{ca.disabled}}" *ngIf=" ca.type == 'date' "></ion-datetime>
+          
+          <ion-select [(ngModel)]="ca.value" class="item-margin" *ngIf=" ca.type == 'list' " disabled="{{ca.disabled}}">
+            <ion-option *ngFor="let op of ca.options" value="{{op}}" >{{op}}</ion-option>
+          </ion-select>
+
+      </ion-item>
+    </div>
+
+  </ion-list>
+
+  <ion-list *ngIf="!reload && data.subcategories?.length > 0" >
+   
+    <ion-list-header class="item item-ios list-header list-header-ios" [style.color]="color" *ngIf="is_requested">
+      Sub Category Values
+    </ion-list-header>
+    
+    <div *ngIf="!is_edit"> 
+      <ion-item  *ngFor="let sk of data.subcategories"  >
+          <p class="mb-10" text-capitalize>{{sk.column}}</p><span>{{sk.value}}</span>  
+      </ion-item>
+    </div>
+
+    <div *ngIf="is_edit"> 
+      <ion-item  *ngFor=" let sa of data.subcategories "  > 
+          
+          <ion-label stacked text-capitalize class="mb-10" >{{sa.column}}</ion-label> 
+
+          <ion-input class="mb-10"  type="{{sa.type}}"  name="test" required  [(ngModel)]="sa.value" disabled="{{sa.disabled}}" *ngIf=" sa.type == 'text' || sa.type == 'number' "></ion-input>
+          
+          <ion-datetime class="mb-10" displayFormat="DD/MM/YYYY" [style.padding]="0"  pickerFormat="DD MMM YYYY" [(ngModel)]="sa.value" placeholder="{{sa.name}}" disabled="{{sa.disabled}}" *ngIf=" sa.type == 'date' "></ion-datetime>
+          
+          <ion-select [(ngModel)]="sa.value" class="item-margin" *ngIf=" sa.type == 'list' " disabled="{{sa.disabled}}">
+            <ion-option *ngFor="let op of sa.options" value="{{op}}" >{{op}}</ion-option>
+          </ion-select>
+
+      </ion-item>
+    </div>
+
+  </ion-list> 
+
+
+  <ion-list *ngIf="!reload && is_requested" >
+   
+    <ion-list-header class="item item-ios list-header list-header-ios" [style.color]="color" >
+      Tags
+      <button ion-button clear item-end  (click)="addTags()" *ngIf="is_edit" > <ion-icon name="add-circle" class="add_new"></ion-icon> </button>
+    </ion-list-header>
+    
+    <div *ngIf="is_edit"> 
+      <ion-chip class="tag-item"  *ngFor=" let tk of data.tagKeys; let i = index " class="mytag" color="secondary" >
+        <ion-label>{{ data.tags[tk].tag_name }}</ion-label>
+        <button ion-button clear color="light" (click)="deleteTag(tk,i)" >
+          <ion-icon name="close-circle" [style.color]="dark" ></ion-icon>
+        </button>
+      </ion-chip>
+    </div>
+
+    <div  class="tag-item"  *ngIf="!is_edit && data.tagKeys?.length > 0"> 
+        <ion-chip *ngFor=" let tk of data.tagKeys "  color="primary" class="mytag" >
+          <ion-label> {{ data.tags[tk].tag_name }} </ion-label>
+        </ion-chip> 
+    </div>
+    
+     <ion-item class="tag-item" *ngIf="data.tagKeys?.length == 0"  > 
+       <h6 >No tag found</h6> 
+     </ion-item>
+
+
+
+  </ion-list> 
+
+
+  <ion-grid class="grid-reload" *ngIf="reload"> 
+    <ion-row text-center>
+      <ion-col> 
+        <p><ion-icon class="connection-timeout" ios="ios-warning-outline" md="md-warning" ></ion-icon><p>
+        <p>Connection Timeout.</p>
+        <button ion-button color="light" small (click)="reloadMe()" >Retry</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+
+  <ion-segment color="light" *ngIf="current_user && !current_user.is_private && document">
+    <ion-segment-button (click) = "link('document')" value="document">
+      <ion-icon name="document" class="document" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_documents_count)}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('contact_internal')" value="contact_internal">
+      <ion-icon name="contacts" class="contact_internal" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_contacts_internal_count)}}</ion-badge>
+      </ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('contact_external')" value="contact_external">
+      <ion-icon name="contacts" class="contact_external" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_contacts_external_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('agenda')" value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_tasks_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('equipment')"  value="equipment">
+      <ion-icon name="cube" class="equipment" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_equipments_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('infrastructure')" value="infrastructure">
+      <ion-icon name="grid" class="infrastructure" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_infrastructure_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment color="light" *ngIf="current_user && current_user.is_private && document">
+
+    <ion-segment-button (click) = "link('contact_external')" value="contact_external">
+      <ion-icon name="contacts" class="contact_external" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_contacts_external_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click) = "link('agenda')" value="agenda">
+      <ion-icon name="calendar" class="agenda" >
+        <ion-badge class="custom-bagde-footer" color="primary">{{fns.count(document.linked_tasks_count)}}</ion-badge></ion-icon>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <ion-fab class="custom-ion-fab" right bottom *ngIf="!reload">
+    <button ion-fab class="construct-edit-btn" (click)="edit()" *ngIf="!is_edit"  >
+      <ion-icon class="construct-icon" name="brush" style="" ></ion-icon>
+    </button>
+    <button ion-fab class="cancel-edit-btn" (click)="cancelEdition()" *ngIf="is_edit"  > 
+      <ion-icon class="cancel-icon" name="close"></ion-icon> 
+    </button>
+  </ion-fab>
+</ion-footer>

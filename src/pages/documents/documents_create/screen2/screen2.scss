@@ -1,0 +1,59 @@
+
+page-create-screen2 {
+	
+	.list-ios .item-block .item-inner {
+	    border-bottom: .55px solid #c8c7cc;
+	}
+
+	.item-ios {
+	    padding-left: 16px;
+	    border-radius: 0;
+	    position: relative;
+	    font-size: 1.6rem;
+	    color: #000;
+	    background-color: #fff;
+	    -webkit-transition: background-color .2s linear;
+	    transition: background-color .2s linear;
+	}
+
+	.item-ios .radio-ios {
+	    position: static;
+	    display: block;
+	    margin: 8px 12px 8px 8px;
+	}
+	.custom-button{
+    	height: 1.8em;
+    	margin: 1.4rem 0.2rem;
+	}
+
+	.item-md {
+	    padding-left: 16px;
+	    border-radius: 0;
+	    position: relative;
+	    font-size: 1.6rem;
+	    color: #000;
+	    background-color: #fff;
+	    -webkit-transition: background-color .2s linear;
+	    transition: background-color .2s linear;
+	}
+
+	.item-margin {
+		margin: 11px 8px 11px 0;
+	}
+
+	.my-header {
+		color:#488aff;
+		border-top:0
+	}
+
+	.toolbar-title {
+		text-align:center;
+	}
+
+	.invalid-feedback{
+		color: #e84a4a;
+	}
+
+}
+
+
