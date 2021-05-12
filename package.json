@@ -50,7 +50,7 @@
     "@ionic/storage": "2.0.1",
     "android": "0.0.8",
     "call-number": "^1.0.1",
-    "chart.js": "^2.7.0",
+    "chart.js": "^2.9.4",
     "com-darryncampbell-cordova-plugin-intent": "0.0.14",
     "com-sarriaroman-photoviewer": "^1.1.10",
     "cordova-android": "6.3.0",
